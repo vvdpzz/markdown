@@ -15,7 +15,26 @@
 		9F1800281554DDCB00948C1C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1800271554DDCB00948C1C /* AppDelegate.m */; };
 		9F18002B1554DDCB00948C1C /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F1800291554DDCB00948C1C /* MainStoryboard.storyboard */; };
 		9F18002E1554DDCB00948C1C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F18002D1554DDCB00948C1C /* ViewController.m */; };
+		9FE59584155D1CFE00917981 /* libGHMarkdownParser.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FE59580155D1B8600917981 /* libGHMarkdownParser.a */; };
+		9FE59589155D20D700917981 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 9FE59588155D20D700917981 /* style.css */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9FE5957F155D1B8600917981 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9FE59578155D1B8600917981 /* GHMarkdownParser.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A7C525F213E6FE1A0003EEE5;
+			remoteInfo = GHMarkdownParser;
+		};
+		9FE59582155D1CF600917981 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9FE59578155D1B8600917981 /* GHMarkdownParser.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A7C525F113E6FE1A0003EEE5;
+			remoteInfo = GHMarkdownParser;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		9F1800131554DDCB00948C1C /* markdown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = markdown.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -31,6 +50,8 @@
 		9F18002A1554DDCB00948C1C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		9F18002C1554DDCB00948C1C /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		9F18002D1554DDCB00948C1C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		9FE59578155D1B8600917981 /* GHMarkdownParser.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GHMarkdownParser.xcodeproj; path = GHMarkdownParser/GHMarkdownParser/GHMarkdownParser.xcodeproj; sourceTree = "<group>"; };
+		9FE59588155D20D700917981 /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FE59584155D1CFE00917981 /* libGHMarkdownParser.a in Frameworks */,
 				9F1800181554DDCB00948C1C /* UIKit.framework in Frameworks */,
 				9F18001A1554DDCB00948C1C /* Foundation.framework in Frameworks */,
 				9F18001C1554DDCB00948C1C /* CoreGraphics.framework in Frameworks */,
@@ -50,6 +72,7 @@
 		9F1800081554DDCB00948C1C = {
 			isa = PBXGroup;
 			children = (
+				9FE59578155D1B8600917981 /* GHMarkdownParser.xcodeproj */,
 				9F18001D1554DDCB00948C1C /* markdown */,
 				9F1800161554DDCB00948C1C /* Frameworks */,
 				9F1800141554DDCB00948C1C /* Products */,
@@ -77,6 +100,7 @@
 		9F18001D1554DDCB00948C1C /* markdown */ = {
 			isa = PBXGroup;
 			children = (
+				9FE59588155D20D700917981 /* style.css */,
 				9F1800261554DDCB00948C1C /* AppDelegate.h */,
 				9F1800271554DDCB00948C1C /* AppDelegate.m */,
 				9F1800291554DDCB00948C1C /* MainStoryboard.storyboard */,
@@ -98,6 +122,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		9FE59579155D1B8600917981 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9FE59580155D1B8600917981 /* libGHMarkdownParser.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -112,6 +144,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9FE59583155D1CF600917981 /* PBXTargetDependency */,
 			);
 			name = markdown;
 			productName = markdown;
@@ -136,12 +169,28 @@
 			mainGroup = 9F1800081554DDCB00948C1C;
 			productRefGroup = 9F1800141554DDCB00948C1C /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 9FE59579155D1B8600917981 /* Products */;
+					ProjectRef = 9FE59578155D1B8600917981 /* GHMarkdownParser.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				9F1800121554DDCB00948C1C /* markdown */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		9FE59580155D1B8600917981 /* libGHMarkdownParser.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libGHMarkdownParser.a;
+			remoteRef = 9FE5957F155D1B8600917981 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		9F1800111554DDCB00948C1C /* Resources */ = {
@@ -150,6 +199,7 @@
 			files = (
 				9F1800221554DDCB00948C1C /* InfoPlist.strings in Resources */,
 				9F18002B1554DDCB00948C1C /* MainStoryboard.storyboard in Resources */,
+				9FE59589155D20D700917981 /* style.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,6 +217,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9FE59583155D1CF600917981 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GHMarkdownParser;
+			targetProxy = 9FE59582155D1CF600917981 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		9F1800201554DDCB00948C1C /* InfoPlist.strings */ = {
@@ -240,7 +298,13 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "markdown/markdown-Prefix.pch";
+				HEADER_SEARCH_PATHS = "GHMarkdownParser/**";
 				INFOPLIST_FILE = "markdown/markdown-Info.plist";
+				LIBRARY_SEARCH_PATHS = "GHMarkdownParser/**";
+				OTHER_LDFLAGS = (
+					"-Objc",
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -251,7 +315,13 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "markdown/markdown-Prefix.pch";
+				HEADER_SEARCH_PATHS = "GHMarkdownParser/**";
 				INFOPLIST_FILE = "markdown/markdown-Info.plist";
+				LIBRARY_SEARCH_PATHS = "GHMarkdownParser/**";
+				OTHER_LDFLAGS = (
+					"-Objc",
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
