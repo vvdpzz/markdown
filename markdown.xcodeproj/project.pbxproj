@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D2E3D401567780D00B4C7DB /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D2E3D3F1567780D00B4C7DB /* icon.png */; };
 		9F1800181554DDCB00948C1C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F1800171554DDCB00948C1C /* UIKit.framework */; };
 		9F18001A1554DDCB00948C1C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F1800191554DDCB00948C1C /* Foundation.framework */; };
 		9F18001C1554DDCB00948C1C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F18001B1554DDCB00948C1C /* CoreGraphics.framework */; };
@@ -41,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4D2E3D3F1567780D00B4C7DB /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		9F1800131554DDCB00948C1C /* markdown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = markdown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F1800171554DDCB00948C1C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9F1800191554DDCB00948C1C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -131,6 +133,7 @@
 		9F18001E1554DDCB00948C1C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4D2E3D3F1567780D00B4C7DB /* icon.png */,
 				9F18001F1554DDCB00948C1C /* markdown-Info.plist */,
 				9F1800201554DDCB00948C1C /* InfoPlist.strings */,
 				9F1800231554DDCB00948C1C /* main.m */,
@@ -217,6 +220,7 @@
 				9F1800221554DDCB00948C1C /* InfoPlist.strings in Resources */,
 				9F18002B1554DDCB00948C1C /* MainStoryboard.storyboard in Resources */,
 				9FE59589155D20D700917981 /* style.css in Resources */,
+				4D2E3D401567780D00B4C7DB /* icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
