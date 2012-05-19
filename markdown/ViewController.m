@@ -296,6 +296,7 @@
                                             inView:self.view
                           permittedArrowDirections:UIPopoverArrowDirectionAny
                                           animated:YES];
+    tablePopoverController.delegate = self;
 }
 
 - (void)didPressLink {
@@ -519,5 +520,10 @@
         self.markdownTextView.text = @"";
     }
     return YES;
+}
+
+-(void)controller:(TablePopoverController *)controller editTextContent:(NSString *)textContent{
+    NSLog(@"received");
+    self.markdownTextView.text = textContent;
 }
 @end

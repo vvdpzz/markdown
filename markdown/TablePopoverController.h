@@ -16,6 +16,6 @@
 
 @property (strong, nonatomic) NSMutableArray *itemArray;
 @property (strong, nonatomic) NSString *muoPath;
-@property (nonatomic, weak) id <tablePopoverControllerDelegate> delegate;
+@property (strong, nonatomic) id <tablePopoverControllerDelegate> delegate;
 
 @end
