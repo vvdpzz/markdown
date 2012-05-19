@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import <DropboxSDK/DropboxSDK.h>
 
 @implementation AppDelegate
 
@@ -14,8 +15,64 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    NSString* appKey = @"jma2uauqc6vqrlt";
+    NSString* appSecret = @"zmrm4d6r89l83o2";
+    NSString *root = kDBRootAppFolder; // Should be set to either kDBRootAppFolder or kDBRootDropbox
+    
+    NSString* errorMsg = nil;
+    if ([appKey rangeOfCharacterFromSet:[[NSCharacterSet alphanumericCharacterSet] invertedSet]].location != NSNotFound) {
+        errorMsg = @"Make sure you set the app key correctly in AppDelegate.m";
+    } else if ([appSecret rangeOfCharacterFromSet:[[NSCharacterSet alphanumericCharacterSet] invertedSet]].location != NSNotFound) {
+        errorMsg = @"Make sure you set the app secret correctly in AppDelegate.m";
+    } else if ([root length] == 0) {
+        errorMsg = @"Set your root to use either App Folder of full Dropbox";
+    } else {
+        NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
+        NSData *plistData = [NSData dataWithContentsOfFile:plistPath];
+        NSDictionary *loadedPlist = 
+        [NSPropertyListSerialization 
+         propertyListFromData:plistData mutabilityOption:0 format:NULL errorDescription:NULL];
+        NSString *scheme = [[[[loadedPlist objectForKey:@"CFBundleURLTypes"] objectAtIndex:0] objectForKey:@"CFBundleURLSchemes"] objectAtIndex:0];
+        if ([scheme isEqual:@"db-APP_KEY"]) {
+            errorMsg = @"Set your URL scheme correctly in xxx-Info.plist";
+        }
+    }
+    
+    DBSession* session = 
+    [[DBSession alloc] initWithAppKey:appKey appSecret:appSecret root:root];
+    session.delegate = self;
+    [DBSession setSharedSession:session];
+    
+    if (errorMsg != nil) {
+        [[[UIAlertView alloc]
+          initWithTitle:@"Error Configuring Session" message:errorMsg 
+          delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil]
+         show];
+    }
+    
+    NSURL *launchURL = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
+    NSInteger majorVersion = 
+    [[[[[UIDevice currentDevice] systemVersion] componentsSeparatedByString:@"."] objectAtIndex:0] integerValue];
+    if (launchURL && majorVersion < 4) {
+        // Pre-iOS 4.0 won't call application:handleOpenURL; this code is only needed if you support
+        // iOS versions 3.2 or below
+        [self application:application handleOpenURL:launchURL];
+        return NO;
+    }
+    
     return YES;
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    if ([[DBSession sharedSession] handleOpenURL:url]) {
+        if ([[DBSession sharedSession] isLinked]) {
+            NSLog(@"App linked successfully!");
+            // At this point you can start making API calls
+        }
+        return YES;
+    }
+    // Add whatever other url handling code your app requires here
+    return NO;
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application

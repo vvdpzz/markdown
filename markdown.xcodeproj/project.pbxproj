@@ -15,6 +15,10 @@
 		9F1800281554DDCB00948C1C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1800271554DDCB00948C1C /* AppDelegate.m */; };
 		9F18002B1554DDCB00948C1C /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F1800291554DDCB00948C1C /* MainStoryboard.storyboard */; };
 		9F18002E1554DDCB00948C1C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F18002D1554DDCB00948C1C /* ViewController.m */; };
+		9F782531156755F8008D2594 /* TablePopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F782530156755F8008D2594 /* TablePopoverController.m */; };
+		9F78253315675678008D2594 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F78253215675678008D2594 /* DropboxSDK.framework */; };
+		9F782535156756C3008D2594 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F782534156756C3008D2594 /* Security.framework */; };
+		9F97F88C1561F1AC00B7D6C5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F97F88B1561F1AC00B7D6C5 /* QuartzCore.framework */; };
 		9FE59584155D1CFE00917981 /* libGHMarkdownParser.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FE59580155D1B8600917981 /* libGHMarkdownParser.a */; };
 		9FE59589155D20D700917981 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 9FE59588155D20D700917981 /* style.css */; };
 /* End PBXBuildFile section */
@@ -50,6 +54,11 @@
 		9F18002A1554DDCB00948C1C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		9F18002C1554DDCB00948C1C /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		9F18002D1554DDCB00948C1C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		9F78252F156755F8008D2594 /* TablePopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TablePopoverController.h; sourceTree = "<group>"; };
+		9F782530156755F8008D2594 /* TablePopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TablePopoverController.m; sourceTree = "<group>"; };
+		9F78253215675678008D2594 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DropboxSDK.framework; sourceTree = "<group>"; };
+		9F782534156756C3008D2594 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		9F97F88B1561F1AC00B7D6C5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		9FE59578155D1B8600917981 /* GHMarkdownParser.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GHMarkdownParser.xcodeproj; path = GHMarkdownParser/GHMarkdownParser/GHMarkdownParser.xcodeproj; sourceTree = "<group>"; };
 		9FE59588155D20D700917981 /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -59,10 +68,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F782535156756C3008D2594 /* Security.framework in Frameworks */,
+				9F97F88C1561F1AC00B7D6C5 /* QuartzCore.framework in Frameworks */,
 				9FE59584155D1CFE00917981 /* libGHMarkdownParser.a in Frameworks */,
 				9F1800181554DDCB00948C1C /* UIKit.framework in Frameworks */,
 				9F18001A1554DDCB00948C1C /* Foundation.framework in Frameworks */,
 				9F18001C1554DDCB00948C1C /* CoreGraphics.framework in Frameworks */,
+				9F78253315675678008D2594 /* DropboxSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,6 +102,9 @@
 		9F1800161554DDCB00948C1C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9F782534156756C3008D2594 /* Security.framework */,
+				9F78253215675678008D2594 /* DropboxSDK.framework */,
+				9F97F88B1561F1AC00B7D6C5 /* QuartzCore.framework */,
 				9F1800171554DDCB00948C1C /* UIKit.framework */,
 				9F1800191554DDCB00948C1C /* Foundation.framework */,
 				9F18001B1554DDCB00948C1C /* CoreGraphics.framework */,
@@ -100,6 +115,8 @@
 		9F18001D1554DDCB00948C1C /* markdown */ = {
 			isa = PBXGroup;
 			children = (
+				9F78252F156755F8008D2594 /* TablePopoverController.h */,
+				9F782530156755F8008D2594 /* TablePopoverController.m */,
 				9FE59588155D20D700917981 /* style.css */,
 				9F1800261554DDCB00948C1C /* AppDelegate.h */,
 				9F1800271554DDCB00948C1C /* AppDelegate.m */,
@@ -213,6 +230,7 @@
 				9F1800241554DDCB00948C1C /* main.m in Sources */,
 				9F1800281554DDCB00948C1C /* AppDelegate.m in Sources */,
 				9F18002E1554DDCB00948C1C /* ViewController.m in Sources */,
+				9F782531156755F8008D2594 /* TablePopoverController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,8 +314,13 @@
 		9F1800321554DDCB00948C1C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "markdown/markdown-Prefix.pch";
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				HEADER_SEARCH_PATHS = "GHMarkdownParser/**";
 				INFOPLIST_FILE = "markdown/markdown-Info.plist";
 				LIBRARY_SEARCH_PATHS = "GHMarkdownParser/**";
@@ -313,8 +336,13 @@
 		9F1800331554DDCB00948C1C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "markdown/markdown-Prefix.pch";
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				HEADER_SEARCH_PATHS = "GHMarkdownParser/**";
 				INFOPLIST_FILE = "markdown/markdown-Info.plist";
 				LIBRARY_SEARCH_PATHS = "GHMarkdownParser/**";
