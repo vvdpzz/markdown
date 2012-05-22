@@ -29,10 +29,9 @@
 @synthesize isExpand, oldFrame, previewPoint, panFrame;
 
 @synthesize fileListBtn;
-@synthesize linkDropboxBtn;
 @synthesize settingBtn;
 @synthesize saveBtn,fileNameField;
-@synthesize syncBtn,restClient,muoPath, muoFolder, itemInDropboxArray,popoverController,itemInDeviceArray,itemAtBothSideArray,tablePopoverController;
+@synthesize syncBtn,restClient,muoPath, muoFolder, itemInDropboxArray,popoverController,itemInDeviceArray,itemAtBothSideArray,tablePopoverController,dropboxSwitch;
 
 - (void)viewDidLoad
 {
@@ -57,7 +56,6 @@
     
     [syncBtn addTarget:self action:@selector(syncMarkdownFile) forControlEvents:UIControlEventTouchUpInside];
     [fileListBtn addTarget:self action:@selector(listFileButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    [linkDropboxBtn addTarget:self action:@selector(didPressLink) forControlEvents:UIControlEventTouchUpInside];
     [settingBtn addTarget:self action:@selector(settingButtonAction) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -239,7 +237,6 @@
     [self setFileNameField: nil];
     [self setSaveBtn: nil];
     [self setFileListBtn:nil];
-    [self setLinkDropboxBtn:nil];
     [self setSettingBtn:nil];
     
     [super viewDidUnload];
@@ -264,8 +261,13 @@
     UIView* popoverView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 300)];
     popoverView.backgroundColor = [UIColor whiteColor];
     
-    UISwitch *dropboxSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(20, 20, 150, 40)];
-    [dropboxSwitch setOn:NO animated:YES];
+    dropboxSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(20, 20, 150, 40)];
+    [dropboxSwitch addTarget:self action:@selector(dropboxSwitch:) forControlEvents:UIControlEventValueChanged];
+    if (![[DBSession sharedSession] isLinked]) {
+        [dropboxSwitch setOn:NO animated:NO];
+    } else {
+        [dropboxSwitch setOn:YES animated:NO];
+    }
     [popoverView addSubview:dropboxSwitch];
     
     popoverContent.view = popoverView;
@@ -277,6 +279,26 @@
                                             inView:self.view
                           permittedArrowDirections:UIPopoverArrowDirectionAny
                                           animated:YES];
+}
+
+- (void)dropboxSwitch:(id)sender {
+    if (dropboxSwitch.on) 
+    {
+        NSLog(@"dropboxSwitch On");
+        if (![[DBSession sharedSession] isLinked]) {
+            [[DBSession sharedSession] link];
+            //[self.restClient loadMetadata:@"/"];
+        } else {
+            //[self.restClient loadMetadata:@"/"];
+        }
+    } else {
+        NSLog(@"dropboxSwitch Off");
+        [[DBSession sharedSession] unlinkAll];
+        [[[UIAlertView alloc] 
+          initWithTitle:@"Account Unlinked!" message:@"Your dropbox account has been unlinked" 
+          delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil]
+         show];
+    }
 }
 
 -(void) listFileButtonAction{
@@ -296,25 +318,6 @@
                                             inView:self.view
                           permittedArrowDirections:UIPopoverArrowDirectionAny
                                           animated:YES];
-}
-
-- (void)didPressLink {
-    if (![[DBSession sharedSession] isLinked]) {
-        [[DBSession sharedSession] link];
-        //[self.restClient loadMetadata:@"/"];
-    } else {
-        [[DBSession sharedSession] unlinkAll];
-        [[[UIAlertView alloc] 
-          initWithTitle:@"Account Unlinked!" message:@"Your dropbox account has been unlinked" 
-          delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil]
-         show];
-        [self updateButtons];
-    }
-}
-- (void)updateButtons {
-    NSString* title = [[DBSession sharedSession] isLinked] ? @"Unlink Dropbox" : @"Link Dropbox";
-    [linkDropboxBtn setTitle:title forState:UIControlStateDisabled];
-    linkDropboxBtn.enabled = [[DBSession sharedSession] isLinked];
 }
 
 - (DBRestClient *)restClient {

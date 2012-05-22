@@ -36,7 +36,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *syncBtn;
 @property (weak, nonatomic) IBOutlet UITextField *fileNameField;
 @property (strong, nonatomic) IBOutlet UIButton *fileListBtn;
-@property (strong, nonatomic) IBOutlet UIButton *linkDropboxBtn;
 @property (strong, nonatomic) IBOutlet UIButton *settingBtn;
 
 @property(nonatomic, retain) UIPopoverController *popoverController;
@@ -47,4 +46,6 @@
 @property (strong, nonatomic) NSMutableArray *itemInDropboxArray;
 @property (strong, nonatomic) NSMutableArray *itemInDeviceArray;
 @property (strong, nonatomic) NSMutableArray *itemAtBothSideArray;
+@property (strong, nonatomic) UISwitch *dropboxSwitch;
+
 @end
