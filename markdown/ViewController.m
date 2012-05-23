@@ -401,29 +401,33 @@
     // 1 首先同步文件版本
     NSEnumerator *e= [metadata.contents objectEnumerator];
     DBMetadata *dbObject;
+    NSString *code;
     while ((dbObject = [e nextObject])) {
         if (!dbObject.isDirectory) {
-            NSString *fileNames = [dbObject.path lastPathComponent]; //找到最上层文件夹例如/Muo中的/xxd.md
-            NSMutableArray* filesAndProperties = [NSMutableArray arrayWithCapacity:[itemInDeviceArray count]];
-            NSError* error = nil;
-            NSDictionary* properties;
-            
-            for (NSString *file in itemInDeviceArray) {
-                NSString *localPath =[muoPath stringByAppendingPathComponent:file];
-                properties = [[NSFileManager defaultManager]attributesOfItemAtPath:localPath error:&error];
-                NSDate* modDate = [properties objectForKey:NSFileModificationDate];
-                if(error == nil) {
-                    [filesAndProperties addObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                   file, @"path",
-                                                   modDate, @"lastModDate",
-                                                   nil]];                 
-                }
-                if ([[NSString stringWithFormat: @"/%@",file] isEqualToString:dbObject.path] && nil != modDate && modDate.timeIntervalSinceReferenceDate < dbObject.lastModifiedDate.timeIntervalSinceReferenceDate) {
-                    [self.restClient loadFile:[NSString stringWithFormat: @"%@%@", dropboxPath, file]
-                                     intoPath:localPath];
-                }
-                else if ([[NSString stringWithFormat: @"/%@",file] isEqualToString:dbObject.path] && nil != modDate && modDate.timeIntervalSinceReferenceDate > dbObject.lastModifiedDate.timeIntervalSinceReferenceDate) {
-                    [[self restClient] uploadFile:fileNames toPath:dropboxPath fromPath:localPath];
+            code = [dbObject.path substringFromIndex: [dbObject.path length] - 2];
+            if ([code isEqualToString: @"md"]) {
+                NSString *fileNames = [dbObject.path lastPathComponent]; //找到最上层文件夹例如/Muo中的/xxd.md
+                NSMutableArray* filesAndProperties = [NSMutableArray arrayWithCapacity:[itemInDeviceArray count]];
+                NSError* error = nil;
+                NSDictionary* properties;
+                
+                for (NSString *file in itemInDeviceArray) {
+                    NSString *localPath =[muoPath stringByAppendingPathComponent:file];
+                    properties = [[NSFileManager defaultManager]attributesOfItemAtPath:localPath error:&error];
+                    NSDate* modDate = [properties objectForKey:NSFileModificationDate];
+                    if(error == nil) {
+                        [filesAndProperties addObject:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                       file, @"path",
+                                                       modDate, @"lastModDate",
+                                                       nil]];                 
+                    }
+                    if ([[NSString stringWithFormat: @"/%@",file] isEqualToString:dbObject.path] && nil != modDate && modDate.timeIntervalSinceReferenceDate < dbObject.lastModifiedDate.timeIntervalSinceReferenceDate) {
+                        [self.restClient loadFile:[NSString stringWithFormat: @"%@%@", dropboxPath, file]
+                                         intoPath:localPath];
+                    }
+                    else if ([[NSString stringWithFormat: @"/%@",file] isEqualToString:dbObject.path] && nil != modDate && modDate.timeIntervalSinceReferenceDate > dbObject.lastModifiedDate.timeIntervalSinceReferenceDate) {
+                        [[self restClient] uploadFile:fileNames toPath:dropboxPath fromPath:localPath];
+                    }
                 }
             }
         }
