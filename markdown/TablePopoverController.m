@@ -49,9 +49,10 @@
     NSFileManager* fileManager=[NSFileManager defaultManager];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *uniquePath=[[paths objectAtIndex:0] stringByAppendingPathComponent:@"Muo"];
-    NSString *filePath = [uniquePath stringByAppendingPathComponent:@"syncDropbox.txt"];
+    NSString *syncDropboxFile=[uniquePath stringByAppendingPathComponent:@"syncDropbox"];
+    NSString *filePath = [syncDropboxFile stringByAppendingString:@".txt"];
     if (![fileManager fileExistsAtPath:filePath]) {
-        BOOL blCreateFile= [fileManager createDirectoryAtPath:filePath withIntermediateDirectories:NO attributes:nil error:NULL]; 
+        BOOL blCreateFile= [fileManager createFileAtPath:filePath contents:nil attributes:nil ]; 
         if (blCreateFile) {
             NSLog(@"syncDropbox.txt created!");
             [fileName writeToFile:filePath atomically:YES];
@@ -77,7 +78,7 @@
             [itemArray removeObject:item];
         }
     }
-    [itemArray removeObject:@".DS_Store"];
+    //[itemArray removeObject:@".DS_Store"];
 
     // self.clearsSelectionOnViewWillAppear = NO;
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
@@ -116,8 +117,13 @@
 {
     if(editingStyle == UITableViewCellEditingStyleDelete)
     {
-        [self.itemArray removeObjectAtIndex:indexPath.row];
+        
+        for (NSString *xxd in itemArray) {
+            NSLog(@"%@",xxd);
+        }
         NSString *mkFileName = [itemArray objectAtIndex:indexPath.row];
+        NSLog(@"mkFileName NO.%i is %@",indexPath.row, mkFileName);
+        [self.itemArray removeObjectAtIndex:indexPath.row];
         [self deleteFile:mkFileName];
         [self syncDropboxFile:mkFileName];
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
