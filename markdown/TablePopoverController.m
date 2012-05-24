@@ -24,6 +24,27 @@
     return self;
 }
 
+-(void)deleteFile: (NSString *)mdFile {
+    NSFileManager* fileManager=[NSFileManager defaultManager];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSString *uniquePath=[[paths objectAtIndex:0] stringByAppendingPathComponent:@"Muo"];
+    NSString *filePath = [uniquePath stringByAppendingPathComponent:mdFile];
+    BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:filePath];
+    if (!blHave) {
+        NSLog(@"filePath doesn't exist");
+        return ;
+    }else {
+        NSLog(@"filePath exist, I'll delete the md file");
+        BOOL blDele= [fileManager removeItemAtPath:filePath error:nil];
+        if (blDele) {
+            NSLog(@"delete success");
+        }else {
+            NSLog(@"delete fail");
+        }
+        
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -67,6 +88,16 @@
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    if(editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        [self.itemArray removeObjectAtIndex:indexPath.row];
+        NSString *mkFileName = [itemArray objectAtIndex:indexPath.row];
+        [self deleteFile:mkFileName];
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

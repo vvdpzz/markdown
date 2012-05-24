@@ -287,9 +287,7 @@
         NSLog(@"dropboxSwitch On");
         if (![[DBSession sharedSession] isLinked]) {
             [[DBSession sharedSession] link];
-            //[self.restClient loadMetadata:@"/"];
-        } else {
-            //[self.restClient loadMetadata:@"/"];
+            [self.restClient loadMetadata:@"/"];
         }
     } else {
         NSLog(@"dropboxSwitch Off");
