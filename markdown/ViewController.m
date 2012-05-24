@@ -351,10 +351,12 @@
     for (NSString *localMD in itemInDeviceArray) {
         NSLog(@"Device has %@ md file(s)",itemInDeviceArray);
         NSLog(@"Dropbox has:%@ md file(s)",itemInDropboxArray);
-        NSString *localPath =[muoPath stringByAppendingPathComponent:localMD];
-        if (![itemInDropboxArray containsObject:localMD]) {
-            [[self restClient] uploadFile:localMD toPath:dropboxPath withParentRev:nil fromPath:localPath];
-            NSLog(@"Uploading %@ from %@ to %@",localMD, localPath,dropboxPath);
+        if ([[[localMD substringFromIndex: [localMD length] - 2] uppercaseString]isEqualToString:@"MD"]){
+            NSString *localPath =[muoPath stringByAppendingPathComponent:localMD];
+            if (![itemInDropboxArray containsObject:localMD]) {
+                [[self restClient] uploadFile:localMD toPath:dropboxPath withParentRev:nil fromPath:localPath];
+                NSLog(@"Uploading %@ from %@ to %@",localMD, localPath,dropboxPath);
+            }
         }
     }
 }
@@ -362,13 +364,14 @@
 -(void) mkDownload{
     NSString *dropboxPath = @"/";
     for (NSString *dropboxMD in itemInDropboxArray) {
-        if (![itemInDeviceArray containsObject:dropboxMD]) {
-            NSLog(@"itemInDeviceArray not contain %@",dropboxMD);
-            NSString *localPath =[muoPath stringByAppendingPathComponent:dropboxMD];
-            //NSString *dropboxMDFile = [NSString stringWithFormat:@"/%s",dropboxMD];
-            NSString *dropboxMDFile =[dropboxPath stringByAppendingPathComponent:dropboxMD];
-            [self.restClient loadFile:dropboxMDFile intoPath:localPath];
-            NSLog(@"Downloading %@ from %@ to %@",dropboxMDFile,dropboxPath,localPath);
+        if ([[[dropboxMD substringFromIndex: [dropboxMD length] - 2] uppercaseString]isEqualToString:@"MD"]){
+            if (![itemInDeviceArray containsObject:dropboxMD]) {
+                NSLog(@"itemInDeviceArray not contain %@",dropboxMD);
+                NSString *localPath =[muoPath stringByAppendingPathComponent:dropboxMD];
+                NSString *dropboxMDFile =[dropboxPath stringByAppendingPathComponent:dropboxMD];
+                [self.restClient loadFile:dropboxMDFile intoPath:localPath];
+                NSLog(@"Downloading %@ from %@ to %@",dropboxMDFile,dropboxPath,localPath);
+            }
         }
     }
 }
@@ -404,8 +407,8 @@
     NSString *code;
     while ((dbObject = [e nextObject])) {
         if (!dbObject.isDirectory) {
-            code = [dbObject.path substringFromIndex: [dbObject.path length] - 2];
-            if ([code isEqualToString: @"md"]) {
+            code = [[dbObject.path substringFromIndex: [dbObject.path length] - 2]uppercaseString];
+            if ([code isEqualToString: @"MD"]) {
                 NSString *fileNames = [dbObject.path lastPathComponent]; //找到最上层文件夹例如/Muo中的/xxd.md
                 NSMutableArray* filesAndProperties = [NSMutableArray arrayWithCapacity:[itemInDeviceArray count]];
                 NSError* error = nil;
