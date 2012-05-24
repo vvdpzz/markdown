@@ -39,6 +39,7 @@
     self.markdownTextView.delegate = self;
     [self.markdownTextView becomeFirstResponder];
     [self relayout];
+    fileNameField.hidden = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidChangeFrame:) name:UIKeyboardDidChangeFrameNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
     
@@ -224,7 +225,6 @@
         else if (newLocation < 0) {
             newLocation = 0;
         }
-        
         [self.markdownTextView setSelectedRange:NSMakeRange(newLocation, newLength)];
     }
 }
@@ -233,7 +233,6 @@
 {
     [self setMarkdownTextView:nil];
     [self setPreviewWebView:nil];
-    
     [self setFileNameField: nil];
     [self setSaveBtn: nil];
     [self setFileListBtn:nil];
@@ -461,25 +460,27 @@
         [saveBtn setTitle:@"OK" forState:UIControlStateNormal];
     } else {
         fileNameField.textAlignment = UITextAlignmentCenter;
-        NSString *fileNamed = fileNameField.text;
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSString *mdFileName = [muoFolder stringByAppendingPathComponent:fileNamed];
-        NSString *filePath = [mdFileName stringByAppendingString:@".md"];
-        NSLog(@"filePath: %@",filePath);
-        if (![fileManager fileExistsAtPath:filePath]) {
-            NSString *savedString = markdownTextView.text;
-            BOOL result = [savedString writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error: nil];
-            if (result) {
-                NSLog(@"文件创建成功！");
-                fileNameField.hidden = YES;
-                [saveBtn setTitle:@"Saved" forState:UIControlStateDisabled];
-                [UIView beginAnimations:@"buttonFades" context:nil];
-                [UIView setAnimationDuration:1];
-                [saveBtn setEnabled:NO];
-                [saveBtn setAlpha:0.0];
-                [UIView commitAnimations];
-            }else {
-                NSLog(@"文件创建失败！");
+        if ([fileNameField.text length] > 0) {
+            NSString *fileNamed = fileNameField.text;
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            NSString *mdFileName = [muoFolder stringByAppendingPathComponent:fileNamed];
+            NSString *filePath = [mdFileName stringByAppendingString:@".md"];
+            NSLog(@"filePath: %@",filePath);
+            if (![fileManager fileExistsAtPath:filePath]) {
+                NSString *savedString = markdownTextView.text;
+                BOOL result = [savedString writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error: nil];
+                if (result) {
+                    NSLog(@"文件创建成功！");
+                    fileNameField.hidden = YES;
+                    [saveBtn setTitle:@"Saved" forState:UIControlStateDisabled];
+                    [UIView beginAnimations:@"buttonFades" context:nil];
+                    [UIView setAnimationDuration:1];
+                    [saveBtn setEnabled:NO];
+                    [saveBtn setAlpha:0.0];
+                    [UIView commitAnimations];
+                }else {
+                    NSLog(@"文件创建失败！");
+                }
             }
         }
     }

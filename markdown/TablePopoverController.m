@@ -29,6 +29,7 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *uniquePath=[[paths objectAtIndex:0] stringByAppendingPathComponent:@"Muo"];
     NSString *filePath = [uniquePath stringByAppendingPathComponent:mdFile];
+    NSLog(@"fileName is %@",filePath);
     BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:filePath];
     if (!blHave) {
         NSLog(@"filePath doesn't exist");
@@ -41,7 +42,25 @@
         }else {
             NSLog(@"delete fail");
         }
-        
+    }
+}
+
+-(void)syncDropboxFile: (NSString *)fileName{
+    NSFileManager* fileManager=[NSFileManager defaultManager];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSString *uniquePath=[[paths objectAtIndex:0] stringByAppendingPathComponent:@"Muo"];
+    NSString *filePath = [uniquePath stringByAppendingPathComponent:@"syncDropbox.txt"];
+    if (![fileManager fileExistsAtPath:filePath]) {
+        BOOL blCreateFile= [fileManager createDirectoryAtPath:filePath withIntermediateDirectories:NO attributes:nil error:NULL]; 
+        if (blCreateFile) {
+            NSLog(@"syncDropbox.txt created!");
+            [fileName writeToFile:filePath atomically:YES];
+        }else {
+            NSLog(@"syncDropbox.txt fail!");
+        }
+    } else {
+        NSLog(@"syncDropbox.txt exist!");
+        [fileName writeToFile:filePath atomically:YES];
     }
 }
 
@@ -53,6 +72,11 @@
     NSString *document=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     muoPath =[document stringByAppendingPathComponent:@"Muo"];
     itemArray = [[fileManager contentsOfDirectoryAtPath:muoPath error:&error]mutableCopy];
+    for (NSString* item in itemArray) {
+        if (![[[item substringFromIndex: [item length] - 2] uppercaseString]isEqualToString:@"MD"]){
+            [itemArray removeObject:item];
+        }
+    }
     [itemArray removeObject:@".DS_Store"];
 
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -95,6 +119,7 @@
         [self.itemArray removeObjectAtIndex:indexPath.row];
         NSString *mkFileName = [itemArray objectAtIndex:indexPath.row];
         [self deleteFile:mkFileName];
+        [self syncDropboxFile:mkFileName];
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
