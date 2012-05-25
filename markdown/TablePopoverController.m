@@ -38,6 +38,7 @@
         NSLog(@"filePath exist, I'll delete the md file");
         BOOL blDele= [fileManager removeItemAtPath:filePath error:nil];
         if (blDele) {
+            [self createItemArray];
             NSLog(@"delete success");
         }else {
             NSLog(@"delete fail");
@@ -65,21 +66,25 @@
     }
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
+- (void)createItemArray{
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error;
     NSString *document=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     muoPath =[document stringByAppendingPathComponent:@"Muo"];
     itemArray = [[fileManager contentsOfDirectoryAtPath:muoPath error:&error]mutableCopy];
     for (NSString* item in itemArray) {
-        if (![[[item substringFromIndex: [item length] - 2] uppercaseString]isEqualToString:@"MD"]){
-            [itemArray removeObject:item];
-        }
+//        if (![[[item substringFromIndex: [item length] - 2] uppercaseString]isEqualToString:@"MD"]){
+//            [itemArray removeObject:item];
+//        }
+        NSLog(@"createItemArray %@",item);
     }
-    //[itemArray removeObject:@".DS_Store"];
-
+}
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self createItemArray];
+    for (NSString* item in itemArray) {
+        NSLog(@"viewDidLoad %@",item);}
     // self.clearsSelectionOnViewWillAppear = NO;
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
@@ -87,6 +92,7 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+    self.itemArray = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -125,7 +131,7 @@
         NSLog(@"mkFileName NO.%i is %@",indexPath.row, mkFileName);
         [self.itemArray removeObjectAtIndex:indexPath.row];
         [self deleteFile:mkFileName];
-        [self syncDropboxFile:mkFileName];
+        //[self syncDropboxFile:mkFileName];
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
