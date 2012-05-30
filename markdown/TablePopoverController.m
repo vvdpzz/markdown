@@ -56,13 +56,13 @@
         BOOL blCreateFile= [fileManager createFileAtPath:filePath contents:nil attributes:nil ]; 
         if (blCreateFile) {
             NSLog(@"syncDropbox.txt created!");
-            [fileName writeToFile:filePath atomically:YES];
+            [fileName writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error: nil];
         }else {
             NSLog(@"syncDropbox.txt fail!");
         }
     } else {
         NSLog(@"syncDropbox.txt exist!");
-        [fileName writeToFile:filePath atomically:YES];
+        [fileName writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error: nil];
     }
 }
 

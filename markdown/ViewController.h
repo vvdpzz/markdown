@@ -47,5 +47,7 @@
 @property (strong, nonatomic) NSMutableArray *itemInDeviceArray;
 @property (strong, nonatomic) NSMutableArray *itemAtBothSideArray;
 @property (strong, nonatomic) UISwitch *dropboxSwitch;
-
+@property (strong, nonatomic) NSString *mkFileName;
+@property (strong, nonatomic) NSString *automdFileName;
+@property (strong, nonatomic) NSTimer *autoSaveTimer;
 @end
