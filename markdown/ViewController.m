@@ -58,6 +58,7 @@
     [syncBtn addTarget:self action:@selector(syncMarkdownFile) forControlEvents:UIControlEventTouchUpInside];
     [fileListBtn addTarget:self action:@selector(listFileButtonAction) forControlEvents:UIControlEventTouchUpInside];
     [settingBtn addTarget:self action:@selector(settingButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [saveBtn addTarget:self action:@selector(saveMarkdownFile) forControlEvents:UIControlEventTouchUpInside];
     
     autoSaveTimer=[NSTimer scheduledTimerWithTimeInterval:3 
                                            target:self 
@@ -471,7 +472,11 @@
 
 - (void)createNewFile
 {
+    //1 save current file
 
+    //2 close current file
+    
+    //3 new markdownTextView.text, create unsave
 }
 
 - (void)autoSaveFile{
@@ -501,7 +506,7 @@
     }
 }
 
-- (IBAction)saveMarkdownFile:(id)sender{
+- (void)saveMarkdownFile{
     if ([self isEmptyString:mkFileName]==NO) {
         NSLog(@"文件存在");
         NSString *savedString = markdownTextView.text;

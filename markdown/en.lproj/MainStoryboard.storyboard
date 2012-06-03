@@ -274,9 +274,6 @@ For feedback, use the menu `Help` - `Send Feedback`</string>
                                         <state key="highlighted">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <connections>
-                                            <action selector="saveMarkdownFile:" destination="2" eventType="touchUpInside" id="fQC-5R-xdP"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="XW9-fa-d8g">
                                         <rect key="frame" x="683" y="10" width="65" height="29"/>
@@ -344,6 +341,23 @@ For feedback, use the menu `Help` - `Send Feedback`</string>
             <point key="canvasLocation" x="1277" y="-238"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="TablePopoverController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TablePopoverController.h"/>
+        </class>
+        <class className="ViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="fileListBtn" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="fileNameField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="markdownTextView" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="previewWebView" candidateClass="UIWebView"/>
+                <relationship kind="outlet" name="saveBtn" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="settingBtn" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="syncBtn" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
