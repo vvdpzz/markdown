@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
 #import <DropboxSDK/DropboxSDK.h>
 #import "TablePopoverController.h"
+
 @class DBRestClient;
 
 @interface ViewController : UIViewController
