@@ -50,4 +50,8 @@
 @property (strong, nonatomic) NSString *mkFileName;
 @property (strong, nonatomic) NSString *automdFileName;
 @property (strong, nonatomic) NSTimer *autoSaveTimer;
+
+@property (strong, nonatomic) UIToolbar *toolbar;
+@property (strong, nonatomic) NSMutableArray *toolbarItem;
+
 @end

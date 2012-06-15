@@ -31,11 +31,92 @@
 @synthesize fileListBtn;
 @synthesize settingBtn;
 @synthesize saveBtn,fileNameField;
-@synthesize syncBtn,restClient,muoPath, muoFolder, itemInDropboxArray,popoverController,itemInDeviceArray,itemAtBothSideArray,tablePopoverController,dropboxSwitch,mkFileName,automdFileName,autoSaveTimer;
+@synthesize syncBtn,restClient,muoPath,muoFolder,itemInDropboxArray,popoverController,itemInDeviceArray,itemAtBothSideArray,tablePopoverController,dropboxSwitch,mkFileName,automdFileName,autoSaveTimer,toolbar,toolbarItem;
+
+- (void)initToolbar{
+    toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0, (self.view.frame.size.height/2) - 44.0, markdownTextView.frame.size.width, 44.0)];
+    self.toolbar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    
+    [self.view addSubview: toolbar];
+}
+
+-(void) insertOnly
+{
+    [self insertString:@"xxd" intoTextView:markdownTextView];
+}
+
+- (void) insertString: (NSString *) insertingString intoTextView: (UITextView *) textView
+{
+    NSRange range = textView.selectedRange;  
+    NSString * firstHalfString = [textView.text substringToIndex:range.location];
+    NSString * secondHalfString = [textView.text substringFromIndex: range.location];  
+    textView.scrollEnabled = NO;
+    
+    textView.text = [NSString stringWithFormat: @"%@%@%@",  
+                     firstHalfString,  
+                     insertingString,  
+                     secondHalfString];  
+    range.location += [insertingString length];  
+    textView.selectedRange = range;  
+    textView.scrollEnabled = YES; 
+}
+
+- (void) insertAtFirstPlace: (NSString *) insertingString intoTextView: (UITextView *) textView
+{
+    UITextRange *textRange = [markdownTextView selectedTextRange];
+    CGRect rect = [markdownTextView caretRectForPosition:textRange.start];
+    UITextPosition *start = [markdownTextView closestPositionToPoint:CGPointMake(0, rect.origin.y)];
+    [markdownTextView setSelectedTextRange:[markdownTextView textRangeFromPosition:start toPosition:start]];
+    
+    NSRange range = textView.selectedRange;
+    NSString * firstHalfString = [textView.text substringToIndex:range.location];  
+    NSString * secondHalfString = [textView.text substringFromIndex: range.location];  
+    textView.scrollEnabled = NO;
+    
+    textView.text = [NSString stringWithFormat: @"%@%@%@",  
+                     firstHalfString,  
+                     insertingString,  
+                     secondHalfString];  
+    range.location += [insertingString length];  
+    textView.selectedRange = range;  
+    textView.scrollEnabled = YES; 
+}
+
+-(void) setH1 {[self insertAtFirstPlace:@"# " intoTextView:markdownTextView];}
+
+-(void) setImage
+{
+    [self insertString:@"![Image](link)" intoTextView:markdownTextView];
+    NSRange range = markdownTextView.selectedRange;
+    range.location = range.location - 5;
+    range.length = 4;
+    self.markdownTextView.selectedRange = range;
+}
+
+-(void) setBlockquotes {[self insertAtFirstPlace:@"> " intoTextView:markdownTextView];}
+-(void) setAsterisk {[self insertAtFirstPlace:@"* " intoTextView:markdownTextView];}
+
+
+- (void)initToolbarItems{
+    UIBarButtonItem *flexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
+    UIBarButtonItem *h1Item = [[UIBarButtonItem alloc] initWithTitle:@"H1" style:UIBarButtonItemStylePlain target:self action:@selector(setH1)];
+    UIBarButtonItem *h2Item   = [[UIBarButtonItem alloc] initWithTitle:@"Image"   style:UIBarButtonItemStylePlain target:self action:@selector(setImage)];
+    UIBarButtonItem *blockquotesItem = [[UIBarButtonItem alloc] initWithTitle:@">" style:UIBarButtonItemStylePlain target:self action:@selector(setBlockquotes)];
+    UIBarButtonItem *asteriskItem  = [[UIBarButtonItem alloc] initWithTitle:@"*"  style:UIBarButtonItemStylePlain target:self action:@selector(setAsterisk)];
+    UIBarButtonItem *codeItem  = [[UIBarButtonItem alloc] initWithTitle:@"<code>"  style:UIBarButtonItemStylePlain target:self action:@selector(handleImage)];
+    
+    //[imageItem setTag:0];
+    
+    toolbarItem = [NSMutableArray arrayWithObjects: h1Item, flexible, h2Item, flexible,blockquotesItem, flexible,asteriskItem, flexible,codeItem, nil];
+    [self.toolbar setItems:toolbarItem animated:YES];
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self initToolbar];
+    [self initToolbarItems];
     self.markdownTextView.delegate = self;
     [self.markdownTextView becomeFirstResponder];
     [self relayout];
