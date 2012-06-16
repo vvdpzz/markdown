@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D1BDFFF158B1686001F7F25 /* MMFloatingNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D1BDFFE158B161C001F7F25 /* MMFloatingNotification.m */; };
 		4D2E3D401567780D00B4C7DB /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D2E3D3F1567780D00B4C7DB /* icon.png */; };
 		4DA56DDD15872C04001EC7E4 /* libGHMarkdownParser.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DA56DDA15872B8D001EC7E4 /* libGHMarkdownParser.a */; };
 		9F1800181554DDCB00948C1C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F1800171554DDCB00948C1C /* UIKit.framework */; };
@@ -42,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4D1BDFFD158B161C001F7F25 /* MMFloatingNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMFloatingNotification.h; sourceTree = "<group>"; };
+		4D1BDFFE158B161C001F7F25 /* MMFloatingNotification.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMFloatingNotification.m; sourceTree = "<group>"; };
 		4D2E3D3F1567780D00B4C7DB /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		4DA56DD215872B8D001EC7E4 /* GHMarkdownParser.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GHMarkdownParser.xcodeproj; path = GHMarkdownParser/GHMarkdownParser/GHMarkdownParser.xcodeproj; sourceTree = "<group>"; };
 		9F1800131554DDCB00948C1C /* markdown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = markdown.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -125,6 +128,8 @@
 		9F18001D1554DDCB00948C1C /* markdown */ = {
 			isa = PBXGroup;
 			children = (
+				4D1BDFFD158B161C001F7F25 /* MMFloatingNotification.h */,
+				4D1BDFFE158B161C001F7F25 /* MMFloatingNotification.m */,
 				9F78252F156755F8008D2594 /* TablePopoverController.h */,
 				9F782530156755F8008D2594 /* TablePopoverController.m */,
 				9FE59588155D20D700917981 /* style.css */,
@@ -231,6 +236,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D1BDFFF158B1686001F7F25 /* MMFloatingNotification.m in Sources */,
 				9F1800241554DDCB00948C1C /* main.m in Sources */,
 				9F1800281554DDCB00948C1C /* AppDelegate.m in Sources */,
 				9F18002E1554DDCB00948C1C /* ViewController.m in Sources */,

@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "GHMarkdownParser.h"
+#import "MMFloatingNotification.h"
 
 #import <DropboxSDK/DropboxSDK.h>
 #import "TablePopoverController.h"
@@ -83,6 +84,7 @@
 }
 
 -(void) setH1 {[self insertAtFirstPlace:@"# " intoTextView:markdownTextView];}
+-(void) SetCode {[self insertAtFirstPlace:@"    " intoTextView:markdownTextView];}
 
 -(void) setImage
 {
@@ -95,7 +97,22 @@
 
 -(void) setBlockquotes {[self insertAtFirstPlace:@"> " intoTextView:markdownTextView];}
 -(void) setAsterisk {[self insertAtFirstPlace:@"* " intoTextView:markdownTextView];}
-
+-(void) setHello {
+    MMFloatingNotification * floatingNotification=[[MMFloatingNotification alloc] initWithTitle:@"Saved!"];
+    [floatingNotification render];
+    floatingNotification.image=[[UIImage alloc] init];
+    [self.view addSubview:floatingNotification];
+    int max_width=320;
+    int max_height=480;
+    [floatingNotification startAnimationCycleFromFrame:
+     CGRectMake(max_width/2-[floatingNotification getDefaultSizeInScale:0.7].width/2,-10,
+                [floatingNotification getDefaultSizeInScale:0.7].width, 
+                [floatingNotification getDefaultSizeInScale:0.7].height) 
+                                       throughKeyFrame:CGRectMake(
+                                                                  (max_width-[floatingNotification getDefaultSizeInScale:1.0].width)/2, max_height/2-60, 
+                                                                  [floatingNotification getDefaultSizeInScale:1.0].width, [floatingNotification getDefaultSizeInScale:1.0].height) toDestinationFrame:CGRectMake((max_width-[floatingNotification getDefaultSizeInScale:0.2].width)/2, max_height-20,[floatingNotification getDefaultSizeInScale:0.2].width, [floatingNotification getDefaultSizeInScale:0.2].height)];
+    floatingNotification=nil;
+}
 
 - (void)initToolbarItems{
     UIBarButtonItem *flexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -104,7 +121,7 @@
     UIBarButtonItem *h2Item   = [[UIBarButtonItem alloc] initWithTitle:@"Image"   style:UIBarButtonItemStylePlain target:self action:@selector(setImage)];
     UIBarButtonItem *blockquotesItem = [[UIBarButtonItem alloc] initWithTitle:@">" style:UIBarButtonItemStylePlain target:self action:@selector(setBlockquotes)];
     UIBarButtonItem *asteriskItem  = [[UIBarButtonItem alloc] initWithTitle:@"*"  style:UIBarButtonItemStylePlain target:self action:@selector(setAsterisk)];
-    UIBarButtonItem *codeItem  = [[UIBarButtonItem alloc] initWithTitle:@"<code>"  style:UIBarButtonItemStylePlain target:self action:@selector(handleImage)];
+    UIBarButtonItem *codeItem  = [[UIBarButtonItem alloc] initWithTitle:@"<code>"  style:UIBarButtonItemStylePlain target:self action:@selector(SetCode)];
     
     //[imageItem setTag:0];
     
