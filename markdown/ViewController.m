@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "GHMarkdownParser.h"
+#import "MMFloatingNotification.h"
 
 #import <DropboxSDK/DropboxSDK.h>
 #import "TablePopoverController.h"
@@ -29,17 +30,114 @@
 @synthesize isExpand, oldFrame, previewPoint, panFrame;
 
 @synthesize fileListBtn;
-@synthesize linkDropboxBtn;
 @synthesize settingBtn;
 @synthesize saveBtn,fileNameField;
-@synthesize syncBtn,restClient,muoPath, muoFolder, itemInDropboxArray,popoverController,itemInDeviceArray,itemAtBothSideArray,tablePopoverController;
+@synthesize syncBtn,restClient,muoPath,muoFolder,itemInDropboxArray,popoverController,itemInDeviceArray,itemAtBothSideArray,tablePopoverController,dropboxSwitch,mkFileName,automdFileName,autoSaveTimer,toolbar,toolbarItem;
+
+- (void)initToolbar{
+    toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0, (self.view.frame.size.height/2) - 44.0, markdownTextView.frame.size.width, 44.0)];
+    self.toolbar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    
+    [self.view addSubview: toolbar];
+}
+
+-(void) insertOnly
+{
+    [self insertString:@"xxd" intoTextView:markdownTextView];
+}
+
+- (void) insertString: (NSString *) insertingString intoTextView: (UITextView *) textView
+{
+    NSRange range = textView.selectedRange;  
+    NSString * firstHalfString = [textView.text substringToIndex:range.location];
+    NSString * secondHalfString = [textView.text substringFromIndex: range.location];  
+    textView.scrollEnabled = NO;
+    
+    textView.text = [NSString stringWithFormat: @"%@%@%@",  
+                     firstHalfString,  
+                     insertingString,  
+                     secondHalfString];  
+    range.location += [insertingString length];  
+    textView.selectedRange = range;  
+    textView.scrollEnabled = YES; 
+}
+
+- (void) insertAtFirstPlace: (NSString *) insertingString intoTextView: (UITextView *) textView
+{
+    UITextRange *textRange = [markdownTextView selectedTextRange];
+    CGRect rect = [markdownTextView caretRectForPosition:textRange.start];
+    UITextPosition *start = [markdownTextView closestPositionToPoint:CGPointMake(0, rect.origin.y)];
+    [markdownTextView setSelectedTextRange:[markdownTextView textRangeFromPosition:start toPosition:start]];
+    
+    NSRange range = textView.selectedRange;
+    NSString * firstHalfString = [textView.text substringToIndex:range.location];  
+    NSString * secondHalfString = [textView.text substringFromIndex: range.location];  
+    textView.scrollEnabled = NO;
+    
+    textView.text = [NSString stringWithFormat: @"%@%@%@",  
+                     firstHalfString,  
+                     insertingString,  
+                     secondHalfString];  
+    range.location += [insertingString length];  
+    textView.selectedRange = range;  
+    textView.scrollEnabled = YES; 
+}
+
+-(void) setH1 {[self insertAtFirstPlace:@"# " intoTextView:markdownTextView];}
+-(void) SetCode {[self insertAtFirstPlace:@"\n    " intoTextView:markdownTextView];}
+
+-(void) setImage
+{
+    [self insertString:@"![Image](link)" intoTextView:markdownTextView];
+    NSRange range = markdownTextView.selectedRange;
+    range.location = range.location - 5;
+    range.length = 4;
+    self.markdownTextView.selectedRange = range;
+}
+
+-(void) setBlockquotes {[self insertAtFirstPlace:@"> " intoTextView:markdownTextView];}
+-(void) setAsterisk {[self insertAtFirstPlace:@"* " intoTextView:markdownTextView];}
+-(void) setHello {
+    MMFloatingNotification * floatingNotification=[[MMFloatingNotification alloc] initWithTitle:@"Saved!"];
+    [floatingNotification render];
+    floatingNotification.image=[[UIImage alloc] init];
+    [self.view addSubview:floatingNotification];
+    int max_width=320;
+    int max_height=480;
+    [floatingNotification startAnimationCycleFromFrame:
+     CGRectMake(max_width/2-[floatingNotification getDefaultSizeInScale:0.7].width/2,-10,
+                [floatingNotification getDefaultSizeInScale:0.7].width, 
+                [floatingNotification getDefaultSizeInScale:0.7].height) 
+                                       throughKeyFrame:CGRectMake(
+                                                                  (max_width-[floatingNotification getDefaultSizeInScale:1.0].width)/2, max_height/2-60, 
+                                                                  [floatingNotification getDefaultSizeInScale:1.0].width, [floatingNotification getDefaultSizeInScale:1.0].height) toDestinationFrame:CGRectMake((max_width-[floatingNotification getDefaultSizeInScale:0.2].width)/2, max_height-20,[floatingNotification getDefaultSizeInScale:0.2].width, [floatingNotification getDefaultSizeInScale:0.2].height)];
+    floatingNotification=nil;
+}
+
+- (void)initToolbarItems{
+    UIBarButtonItem *flexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
+    UIBarButtonItem *h1Item = [[UIBarButtonItem alloc] initWithTitle:@"H1" style:UIBarButtonItemStylePlain target:self action:@selector(setH1)];
+    UIBarButtonItem *h2Item   = [[UIBarButtonItem alloc] initWithTitle:@"Image"   style:UIBarButtonItemStylePlain target:self action:@selector(setImage)];
+    UIBarButtonItem *blockquotesItem = [[UIBarButtonItem alloc] initWithTitle:@">" style:UIBarButtonItemStylePlain target:self action:@selector(setBlockquotes)];
+    UIBarButtonItem *asteriskItem  = [[UIBarButtonItem alloc] initWithTitle:@"*"  style:UIBarButtonItemStylePlain target:self action:@selector(setAsterisk)];
+    UIBarButtonItem *codeItem  = [[UIBarButtonItem alloc] initWithTitle:@"<code>"  style:UIBarButtonItemStylePlain target:self action:@selector(SetCode)];
+    
+    //[imageItem setTag:0];
+    
+    toolbarItem = [NSMutableArray arrayWithObjects: h1Item, flexible, h2Item, flexible,blockquotesItem, flexible,asteriskItem, flexible,codeItem, nil];
+    [self.toolbar setItems:toolbarItem animated:YES];
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self initToolbar];
+    [self initToolbarItems];
     self.markdownTextView.delegate = self;
     [self.markdownTextView becomeFirstResponder];
     [self relayout];
+    fileNameField.hidden = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidChangeFrame:) name:UIKeyboardDidChangeFrameNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
     
@@ -57,8 +155,14 @@
     
     [syncBtn addTarget:self action:@selector(syncMarkdownFile) forControlEvents:UIControlEventTouchUpInside];
     [fileListBtn addTarget:self action:@selector(listFileButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    [linkDropboxBtn addTarget:self action:@selector(didPressLink) forControlEvents:UIControlEventTouchUpInside];
     [settingBtn addTarget:self action:@selector(settingButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [saveBtn addTarget:self action:@selector(saveMarkdownFile) forControlEvents:UIControlEventTouchUpInside];
+    
+    autoSaveTimer=[NSTimer scheduledTimerWithTimeInterval:3 
+                                           target:self 
+                                         selector:@selector(autoSaveFile) 
+                                         userInfo:nil 
+                                          repeats:YES]; 
 }
 
 - (void)fullscreen:(UIGestureRecognizer *)gestureRecognizer{
@@ -226,7 +330,6 @@
         else if (newLocation < 0) {
             newLocation = 0;
         }
-        
         [self.markdownTextView setSelectedRange:NSMakeRange(newLocation, newLength)];
     }
 }
@@ -235,11 +338,9 @@
 {
     [self setMarkdownTextView:nil];
     [self setPreviewWebView:nil];
-    
     [self setFileNameField: nil];
     [self setSaveBtn: nil];
     [self setFileListBtn:nil];
-    [self setLinkDropboxBtn:nil];
     [self setSettingBtn:nil];
     
     [super viewDidUnload];
@@ -264,8 +365,13 @@
     UIView* popoverView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 300)];
     popoverView.backgroundColor = [UIColor whiteColor];
     
-    UISwitch *dropboxSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(20, 20, 150, 40)];
-    [dropboxSwitch setOn:NO animated:YES];
+    dropboxSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(20, 20, 150, 40)];
+    [dropboxSwitch addTarget:self action:@selector(dropboxSwitch:) forControlEvents:UIControlEventValueChanged];
+    if (![[DBSession sharedSession] isLinked]) {
+        [dropboxSwitch setOn:NO animated:NO];
+    } else {
+        [dropboxSwitch setOn:YES animated:NO];
+    }
     [popoverView addSubview:dropboxSwitch];
     
     popoverContent.view = popoverView;
@@ -277,6 +383,24 @@
                                             inView:self.view
                           permittedArrowDirections:UIPopoverArrowDirectionAny
                                           animated:YES];
+}
+
+- (void)dropboxSwitch:(id)sender {
+    if (dropboxSwitch.on) 
+    {
+        NSLog(@"dropboxSwitch On");
+        if (![[DBSession sharedSession] isLinked]) {
+            [[DBSession sharedSession] link];
+            [self.restClient loadMetadata:@"/"];
+        }
+    } else {
+        NSLog(@"dropboxSwitch Off");
+        [[DBSession sharedSession] unlinkAll];
+        [[[UIAlertView alloc] 
+          initWithTitle:@"Account Unlinked!" message:@"Your dropbox account has been unlinked" 
+          delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil]
+         show];
+    }
 }
 
 -(void) listFileButtonAction{
@@ -297,25 +421,6 @@
                           permittedArrowDirections:UIPopoverArrowDirectionAny
                                           animated:YES];
     tablePopoverController.delegate = self;
-}
-
-- (void)didPressLink {
-    if (![[DBSession sharedSession] isLinked]) {
-        [[DBSession sharedSession] link];
-        //[self.restClient loadMetadata:@"/"];
-    } else {   
-        [[DBSession sharedSession] unlinkAll];
-        [[[UIAlertView alloc] 
-          initWithTitle:@"Account Unlinked!" message:@"Your dropbox account has been unlinked" 
-          delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil]
-         show];
-        [self updateButtons];
-    }
-}
-- (void)updateButtons {
-    NSString* title = [[DBSession sharedSession] isLinked] ? @"Unlink Dropbox" : @"Link Dropbox";
-    [linkDropboxBtn setTitle:title forState:UIControlStateDisabled];
-    linkDropboxBtn.enabled = [[DBSession sharedSession] isLinked];
 }
 
 - (DBRestClient *)restClient {
@@ -349,10 +454,12 @@
     for (NSString *localMD in itemInDeviceArray) {
         NSLog(@"Device has %@ md file(s)",itemInDeviceArray);
         NSLog(@"Dropbox has:%@ md file(s)",itemInDropboxArray);
-        NSString *localPath =[muoPath stringByAppendingPathComponent:localMD];
-        if (![itemInDropboxArray containsObject:localMD]) {
-            [[self restClient] uploadFile:localMD toPath:dropboxPath withParentRev:nil fromPath:localPath];
-            NSLog(@"Uploading %@ from %@ to %@",localMD, localPath,dropboxPath);
+        if ([[[localMD substringFromIndex: [localMD length] - 2] uppercaseString]isEqualToString:@"MD"]){
+            NSString *localPath =[muoPath stringByAppendingPathComponent:localMD];
+            if (![itemInDropboxArray containsObject:localMD]) {
+                [[self restClient] uploadFile:localMD toPath:dropboxPath withParentRev:nil fromPath:localPath];
+                NSLog(@"Uploading %@ from %@ to %@",localMD, localPath,dropboxPath);
+            }
         }
     }
 }
@@ -360,13 +467,14 @@
 -(void) mkDownload{
     NSString *dropboxPath = @"/";
     for (NSString *dropboxMD in itemInDropboxArray) {
-        if (![itemInDeviceArray containsObject:dropboxMD]) {
-            NSLog(@"itemInDeviceArray not contain %@",dropboxMD);
-            NSString *localPath =[muoPath stringByAppendingPathComponent:dropboxMD];
-            //NSString *dropboxMDFile = [NSString stringWithFormat:@"/%s",dropboxMD];
-            NSString *dropboxMDFile =[dropboxPath stringByAppendingPathComponent:dropboxMD];
-            [self.restClient loadFile:dropboxMDFile intoPath:localPath];
-            NSLog(@"Downloading %@ from %@ to %@",dropboxMDFile,dropboxPath,localPath);
+        if ([[[dropboxMD substringFromIndex: [dropboxMD length] - 2] uppercaseString]isEqualToString:@"MD"]){
+            if (![itemInDeviceArray containsObject:dropboxMD]) {
+                NSLog(@"itemInDeviceArray not contain %@",dropboxMD);
+                NSString *localPath =[muoPath stringByAppendingPathComponent:dropboxMD];
+                NSString *dropboxMDFile =[dropboxPath stringByAppendingPathComponent:dropboxMD];
+                [self.restClient loadFile:dropboxMDFile intoPath:localPath];
+                NSLog(@"Downloading %@ from %@ to %@",dropboxMDFile,dropboxPath,localPath);
+            }
         }
     }
 }
@@ -399,29 +507,33 @@
     // 1 首先同步文件版本
     NSEnumerator *e= [metadata.contents objectEnumerator];
     DBMetadata *dbObject;
+    NSString *code;
     while ((dbObject = [e nextObject])) {
         if (!dbObject.isDirectory) {
-            NSString *fileNames = [dbObject.path lastPathComponent]; //找到最上层文件夹例如/Muo中的/xxd.md
-            NSMutableArray* filesAndProperties = [NSMutableArray arrayWithCapacity:[itemInDeviceArray count]];
-            NSError* error = nil;
-            NSDictionary* properties;
-            
-            for (NSString *file in itemInDeviceArray) {
-                NSString *localPath =[muoPath stringByAppendingPathComponent:file];
-                properties = [[NSFileManager defaultManager]attributesOfItemAtPath:localPath error:&error];
-                NSDate* modDate = [properties objectForKey:NSFileModificationDate];
-                if(error == nil) {
-                    [filesAndProperties addObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                   file, @"path",
-                                                   modDate, @"lastModDate",
-                                                   nil]];                 
-                }
-                if ([[NSString stringWithFormat: @"/%@",file] isEqualToString:dbObject.path] && nil != modDate && modDate.timeIntervalSinceReferenceDate < dbObject.lastModifiedDate.timeIntervalSinceReferenceDate) {
-                    [self.restClient loadFile:[NSString stringWithFormat: @"%@%@", dropboxPath, file]
-                                     intoPath:localPath];
-                }
-                else if ([[NSString stringWithFormat: @"/%@",file] isEqualToString:dbObject.path] && nil != modDate && modDate.timeIntervalSinceReferenceDate > dbObject.lastModifiedDate.timeIntervalSinceReferenceDate) {
-                    [[self restClient] uploadFile:fileNames toPath:dropboxPath fromPath:localPath];
+            code = [[dbObject.path substringFromIndex: [dbObject.path length] - 2]uppercaseString];
+            if ([code isEqualToString: @"MD"]) {
+                NSString *fileNames = [dbObject.path lastPathComponent]; //找到最上层文件夹例如/Muo中的/xxd.md
+                NSMutableArray* filesAndProperties = [NSMutableArray arrayWithCapacity:[itemInDeviceArray count]];
+                NSError* error = nil;
+                NSDictionary* properties;
+                
+                for (NSString *file in itemInDeviceArray) {
+                    NSString *localPath =[muoPath stringByAppendingPathComponent:file];
+                    properties = [[NSFileManager defaultManager]attributesOfItemAtPath:localPath error:&error];
+                    NSDate* modDate = [properties objectForKey:NSFileModificationDate];
+                    if(error == nil) {
+                        [filesAndProperties addObject:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                       file, @"path",
+                                                       modDate, @"lastModDate",
+                                                       nil]];                 
+                    }
+                    if ([[NSString stringWithFormat: @"/%@",file] isEqualToString:dbObject.path] && nil != modDate && modDate.timeIntervalSinceReferenceDate < dbObject.lastModifiedDate.timeIntervalSinceReferenceDate) {
+                        [self.restClient loadFile:[NSString stringWithFormat: @"%@%@", dropboxPath, file]
+                                         intoPath:localPath];
+                    }
+                    else if ([[NSString stringWithFormat: @"/%@",file] isEqualToString:dbObject.path] && nil != modDate && modDate.timeIntervalSinceReferenceDate > dbObject.lastModifiedDate.timeIntervalSinceReferenceDate) {
+                        [[self restClient] uploadFile:fileNames toPath:dropboxPath fromPath:localPath];
+                    }
                 }
             }
         }
@@ -448,31 +560,97 @@
     [self.restClient loadMetadata:@"/"];
 }
 
-- (IBAction)saveMarkdownFile:(id)sender{
-    if (fileNameField.hidden == YES) {
-        fileNameField.hidden = NO;
-        [saveBtn setTitle:@"OK" forState:UIControlStateNormal];
-    } else {
-        fileNameField.textAlignment = UITextAlignmentCenter;
-        NSString *fileNamed = fileNameField.text;
+- (BOOL) isEmptyString:(NSString *) string {
+    if([string length] == 0) {
+        return YES;
+    } else if([[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length] == 0) {
+        return YES;
+    }
+    return NO;
+}
+
+- (void)createNewFile
+{
+    //1 save current file
+
+    //2 close current file
+    
+    //3 new markdownTextView.text, create unsave
+}
+
+- (void)autoSaveFile{
+    if ([self isEmptyString:mkFileName]==NO) {
+        NSLog(@"文件存在");
+        NSString *savedString = markdownTextView.text;
+        BOOL result = [savedString writeToFile:mkFileName atomically:YES encoding:NSUTF8StringEncoding error: nil];
+        if (result) {
+            NSLog(@"文件自动保存到%@成功！",mkFileName);
+        }else {
+            NSLog(@"文件自动保存到%@失败！",mkFileName);
+        }
+    }else {
+        NSLog(@"没有文件需要创建");
         NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSString *mdFileName = [muoFolder stringByAppendingPathComponent:fileNamed];
-        NSString *filePath = [mdFileName stringByAppendingString:@".md"];
-        NSLog(@"filePath: %@",filePath);
-        if (![fileManager fileExistsAtPath:filePath]) {
+        NSString *mdFileName = [muoFolder stringByAppendingPathComponent:@"Unsaved"];
+        automdFileName = [mdFileName stringByAppendingString:@".md"];
+        if (![fileManager fileExistsAtPath:mkFileName]) {
             NSString *savedString = markdownTextView.text;
-            BOOL result = [savedString writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error: nil];
+            BOOL result = [savedString writeToFile:automdFileName atomically:YES encoding:NSUTF8StringEncoding error: nil];
             if (result) {
-                NSLog(@"文件创建成功！");
-                fileNameField.hidden = YES;
-                [saveBtn setTitle:@"Saved" forState:UIControlStateDisabled];
-                [UIView beginAnimations:@"buttonFades" context:nil];
-                [UIView setAnimationDuration:1];
-                [saveBtn setEnabled:NO];
-                [saveBtn setAlpha:0.0];
-                [UIView commitAnimations];
+                NSLog(@"文件自动保存到%@成功！",automdFileName);
             }else {
-                NSLog(@"文件创建失败！");
+                NSLog(@"文件自动保存到%@失败！",automdFileName);
+            }
+        }
+    }
+}
+
+- (void)saveMarkdownFile{
+    if ([self isEmptyString:mkFileName]==NO) {
+        NSLog(@"文件存在");
+        NSString *savedString = markdownTextView.text;
+        BOOL result = [savedString writeToFile:mkFileName atomically:YES encoding:NSUTF8StringEncoding error: nil];
+        if (result) {
+            NSLog(@"写入文件成功");
+            fileNameField.hidden = YES;
+            [saveBtn setTitle:@"Saved" forState:UIControlStateNormal];
+            [UIView beginAnimations:nil context:nil];
+            [UIView setAnimationDuration:1];
+            [saveBtn setTitle:@"Save" forState:UIControlStateNormal];
+            [UIView commitAnimations];
+        }else {
+            NSLog(@"写入文件失败");
+        }
+    }else {
+        NSLog(@"没有文件需要创建");
+        if (fileNameField.hidden == YES) {
+            fileNameField.hidden = NO;
+            [saveBtn setTitle:@"OK" forState:UIControlStateNormal];
+        } else {
+            fileNameField.textAlignment = UITextAlignmentCenter;
+            if ([fileNameField.text length] > 0) {                                                      
+                NSString *fileNamed = fileNameField.text;
+                NSFileManager *fileManager = [NSFileManager defaultManager];
+                NSString *mdFileName = [muoFolder stringByAppendingPathComponent:fileNamed];
+                mkFileName = [mdFileName stringByAppendingString:@".md"];
+                NSLog(@"mkFileName: %@",mkFileName);
+                if (![fileManager fileExistsAtPath:mkFileName]) {
+                    NSString *savedString = markdownTextView.text;
+                    BOOL result = [savedString writeToFile:mkFileName atomically:YES encoding:NSUTF8StringEncoding error: nil];
+                    if (result) {
+                        NSLog(@"文件创建成功！");
+                        fileNameField.hidden = YES;
+                        [saveBtn setTitle:@"Saved" forState:UIControlStateNormal];
+                        [UIView beginAnimations:nil context:nil];
+                        [UIView setAnimationDuration:1];
+                        [saveBtn setTitle:@"Save" forState:UIControlStateNormal];
+                        [UIView commitAnimations];
+                    }else {
+                        NSLog(@"文件创建失败！");
+                    }
+                }
+            } else {
+                fileNameField.placeholder = @"Please name your file";
             }
         }
     }

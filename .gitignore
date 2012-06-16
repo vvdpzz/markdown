@@ -16,5 +16,9 @@ profile
 DerivedData
 
 #OS X
+<<<<<<< HEAD
 .DS_Store
 
+=======
+.DS_Store
+>>>>>>> f69496a0d6906ec32e916a19dddc2678b51523ba
