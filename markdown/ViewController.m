@@ -303,7 +303,7 @@
     if (![[DBSession sharedSession] isLinked]) {
         [[DBSession sharedSession] link];
         //[self.restClient loadMetadata:@"/"];
-    } else {
+    } else {   
         [[DBSession sharedSession] unlinkAll];
         [[[UIAlertView alloc] 
           initWithTitle:@"Account Unlinked!" message:@"Your dropbox account has been unlinked" 
