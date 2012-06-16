@@ -179,9 +179,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.delegate controller:self editTextContent:[itemArray objectAtIndex:indexPath.row]];
-    ViewController *mainViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"mainViewController"];
+    NSLog(@"fire");
+//    ViewController *mainViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"mainViewController"];
 //    mainViewController.markdownTextView.text = [itemArray objectAtIndex:indexPath.row];
-    NSLog(@"%@", [itemArray objectAtIndex:indexPath.row]);
+//    NSLog(@"%@", [itemArray objectAtIndex:indexPath.row]);
 }
 
 @end

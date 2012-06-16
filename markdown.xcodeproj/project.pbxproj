@@ -351,13 +351,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "markdown/markdown-Prefix.pch";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				HEADER_SEARCH_PATHS = (
-					"/Users/xuexiaodong79/iOS\\ dev/UISpliviewController/markdown/GHMarkdownParser/GHMarkdownParser/GHMarkdownParser/**",
-				);
+				HEADER_SEARCH_PATHS = "GHMarkdownParser/GHMarkdownParser/GHMarkdownParser/**";
 				INFOPLIST_FILE = "markdown/markdown-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"/Users/xuexiaodong79/iOS\\ dev/UISpliviewController/markdown/GHMarkdownParser/GHMarkdownParser/GHMarkdownParser/**",
-				);
+				LIBRARY_SEARCH_PATHS = "GHMarkdownParser/GHMarkdownParser/GHMarkdownParser/**";
 				OTHER_LDFLAGS = (
 					"-Objc",
 					"-all_load",
@@ -377,13 +373,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "markdown/markdown-Prefix.pch";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				HEADER_SEARCH_PATHS = (
-					"/Users/xuexiaodong79/iOS\\ dev/UISpliviewController/markdown/GHMarkdownParser/GHMarkdownParser/GHMarkdownParser/**",
-				);
+				HEADER_SEARCH_PATHS = "GHMarkdownParser/GHMarkdownParser/GHMarkdownParser/**";
 				INFOPLIST_FILE = "markdown/markdown-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"/Users/xuexiaodong79/iOS\\ dev/UISpliviewController/markdown/GHMarkdownParser/GHMarkdownParser/GHMarkdownParser/**",
-				);
+				LIBRARY_SEARCH_PATHS = "GHMarkdownParser/GHMarkdownParser/GHMarkdownParser/**";
 				OTHER_LDFLAGS = (
 					"-Objc",
 					"-all_load",

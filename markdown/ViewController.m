@@ -84,7 +84,7 @@
 }
 
 -(void) setH1 {[self insertAtFirstPlace:@"# " intoTextView:markdownTextView];}
--(void) SetCode {[self insertAtFirstPlace:@"    " intoTextView:markdownTextView];}
+-(void) SetCode {[self insertAtFirstPlace:@"\n    " intoTextView:markdownTextView];}
 
 -(void) setImage
 {
@@ -420,6 +420,7 @@
                                             inView:self.view
                           permittedArrowDirections:UIPopoverArrowDirectionAny
                                           animated:YES];
+    tablePopoverController.delegate = self;
 }
 
 - (DBRestClient *)restClient {
@@ -697,5 +698,10 @@
         self.markdownTextView.text = @"";
     }
     return YES;
+}
+
+-(void)controller:(TablePopoverController *)controller editTextContent:(NSString *)textContent{
+    NSLog(@"received");
+    self.markdownTextView.text = textContent;
 }
 @end
