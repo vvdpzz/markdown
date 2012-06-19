@@ -7,13 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D13E655158C8B0B0079C116 /* glyphicons_081_refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D13E652158C8B0B0079C116 /* glyphicons_081_refresh.png */; };
-		4D13E656158C8B0B0079C116 /* glyphicons_114_list.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D13E653158C8B0B0079C116 /* glyphicons_114_list.png */; };
-		4D13E657158C8B0B0079C116 /* glyphicons_248_asterisk.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D13E654158C8B0B0079C116 /* glyphicons_248_asterisk.png */; };
-		4D13E659158C8BE00079C116 /* glyphicons_130_inbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D13E658158C8BE00079C116 /* glyphicons_130_inbox.png */; };
-		4D13E65B158C8BF70079C116 /* glyphicons_030_pencil.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D13E65A158C8BF70079C116 /* glyphicons_030_pencil.png */; };
 		4D1BDFFF158B1686001F7F25 /* MMFloatingNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D1BDFFE158B161C001F7F25 /* MMFloatingNotification.m */; };
 		4D2E3D401567780D00B4C7DB /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D2E3D3F1567780D00B4C7DB /* icon.png */; };
+		4D8F517D159040F40087586D /* Format Bullets.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D8F517C159040F40087586D /* Format Bullets.png */; };
+		4D8F517F159040F80087586D /* Gears.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D8F517E159040F80087586D /* Gears.png */; };
+		4D8F5181159041070087586D /* Pencil.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D8F5180159041070087586D /* Pencil.png */; };
+		4D8F51831590411D0087586D /* Button Reload.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D8F51821590411D0087586D /* Button Reload.png */; };
+		4D8F5185159042790087586D /* Quill.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D8F5184159042790087586D /* Quill.png */; };
+		4D8F51871590428C0087586D /* Done.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D8F51861590428C0087586D /* Done.png */; };
+		4D8F518B159045AC0087586D /* SaveDisk.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D8F518A159045AC0087586D /* SaveDisk.png */; };
 		4DA56DDD15872C04001EC7E4 /* libGHMarkdownParser.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DA56DDA15872B8D001EC7E4 /* libGHMarkdownParser.a */; };
 		9F1800181554DDCB00948C1C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F1800171554DDCB00948C1C /* UIKit.framework */; };
 		9F18001A1554DDCB00948C1C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F1800191554DDCB00948C1C /* Foundation.framework */; };
@@ -48,14 +50,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4D13E652158C8B0B0079C116 /* glyphicons_081_refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = glyphicons_081_refresh.png; sourceTree = "<group>"; };
-		4D13E653158C8B0B0079C116 /* glyphicons_114_list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = glyphicons_114_list.png; sourceTree = "<group>"; };
-		4D13E654158C8B0B0079C116 /* glyphicons_248_asterisk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = glyphicons_248_asterisk.png; sourceTree = "<group>"; };
-		4D13E658158C8BE00079C116 /* glyphicons_130_inbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = glyphicons_130_inbox.png; sourceTree = "<group>"; };
-		4D13E65A158C8BF70079C116 /* glyphicons_030_pencil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = glyphicons_030_pencil.png; sourceTree = "<group>"; };
 		4D1BDFFD158B161C001F7F25 /* MMFloatingNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMFloatingNotification.h; sourceTree = "<group>"; };
 		4D1BDFFE158B161C001F7F25 /* MMFloatingNotification.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMFloatingNotification.m; sourceTree = "<group>"; };
 		4D2E3D3F1567780D00B4C7DB /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		4D8F517C159040F40087586D /* Format Bullets.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Format Bullets.png"; sourceTree = "<group>"; };
+		4D8F517E159040F80087586D /* Gears.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Gears.png; sourceTree = "<group>"; };
+		4D8F5180159041070087586D /* Pencil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pencil.png; sourceTree = "<group>"; };
+		4D8F51821590411D0087586D /* Button Reload.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Button Reload.png"; sourceTree = "<group>"; };
+		4D8F5184159042790087586D /* Quill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Quill.png; sourceTree = "<group>"; };
+		4D8F51861590428C0087586D /* Done.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Done.png; sourceTree = "<group>"; };
+		4D8F518A159045AC0087586D /* SaveDisk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SaveDisk.png; sourceTree = "<group>"; };
 		4DA56DD215872B8D001EC7E4 /* GHMarkdownParser.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GHMarkdownParser.xcodeproj; path = GHMarkdownParser/GHMarkdownParser/GHMarkdownParser.xcodeproj; sourceTree = "<group>"; };
 		9F1800131554DDCB00948C1C /* markdown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = markdown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F1800171554DDCB00948C1C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -156,11 +160,13 @@
 		9F18001E1554DDCB00948C1C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				4D13E65A158C8BF70079C116 /* glyphicons_030_pencil.png */,
-				4D13E658158C8BE00079C116 /* glyphicons_130_inbox.png */,
-				4D13E652158C8B0B0079C116 /* glyphicons_081_refresh.png */,
-				4D13E653158C8B0B0079C116 /* glyphicons_114_list.png */,
-				4D13E654158C8B0B0079C116 /* glyphicons_248_asterisk.png */,
+				4D8F518A159045AC0087586D /* SaveDisk.png */,
+				4D8F51861590428C0087586D /* Done.png */,
+				4D8F5184159042790087586D /* Quill.png */,
+				4D8F51821590411D0087586D /* Button Reload.png */,
+				4D8F5180159041070087586D /* Pencil.png */,
+				4D8F517E159040F80087586D /* Gears.png */,
+				4D8F517C159040F40087586D /* Format Bullets.png */,
 				4D2E3D3F1567780D00B4C7DB /* icon.png */,
 				9F18001F1554DDCB00948C1C /* markdown-Info.plist */,
 				9F1800201554DDCB00948C1C /* InfoPlist.strings */,
@@ -241,11 +247,13 @@
 				9F18002B1554DDCB00948C1C /* MainStoryboard.storyboard in Resources */,
 				9FE59589155D20D700917981 /* style.css in Resources */,
 				4D2E3D401567780D00B4C7DB /* icon.png in Resources */,
-				4D13E655158C8B0B0079C116 /* glyphicons_081_refresh.png in Resources */,
-				4D13E656158C8B0B0079C116 /* glyphicons_114_list.png in Resources */,
-				4D13E657158C8B0B0079C116 /* glyphicons_248_asterisk.png in Resources */,
-				4D13E659158C8BE00079C116 /* glyphicons_130_inbox.png in Resources */,
-				4D13E65B158C8BF70079C116 /* glyphicons_030_pencil.png in Resources */,
+				4D8F517D159040F40087586D /* Format Bullets.png in Resources */,
+				4D8F517F159040F80087586D /* Gears.png in Resources */,
+				4D8F5181159041070087586D /* Pencil.png in Resources */,
+				4D8F51831590411D0087586D /* Button Reload.png in Resources */,
+				4D8F5185159042790087586D /* Quill.png in Resources */,
+				4D8F51871590428C0087586D /* Done.png in Resources */,
+				4D8F518B159045AC0087586D /* SaveDisk.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

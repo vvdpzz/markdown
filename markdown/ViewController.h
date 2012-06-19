@@ -33,10 +33,13 @@
 @property (nonatomic) CGRect panFrame;
 
 @property (weak, nonatomic) IBOutlet UIButton *saveBtn;
+@property (weak, nonatomic) IBOutlet UIButton *saveDoneBtn;
 @property (weak, nonatomic) IBOutlet UIButton *syncBtn;
 @property (weak, nonatomic) IBOutlet UITextField *fileNameField;
 @property (strong, nonatomic) IBOutlet UIButton *fileListBtn;
 @property (strong, nonatomic) IBOutlet UIButton *settingBtn;
+@property (strong, nonatomic) IBOutlet UIButton *createMDBtn;
+@property (strong, nonatomic) IBOutlet UILabel *infoLabel;
 
 @property(nonatomic, retain) UIPopoverController *popoverController;
 @property(nonatomic, retain) TablePopoverController *tablePopoverController;

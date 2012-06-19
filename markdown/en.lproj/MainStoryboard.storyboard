@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" id="b1r-ge-S50">
-                                <rect key="frame" x="0.0" y="20" width="768" height="226"/>
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="246"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <string key="text"># Mou
@@ -240,10 +240,10 @@ For feedback, use the menu `Help` - `Send Feedback`</string>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ULm-ub-3Ve">
-                                        <rect key="frame" x="-7" y="0.0" width="72" height="37"/>
+                                        <rect key="frame" x="21" y="4" width="48" height="42"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="glyphicons_114_list.png">
+                                        <state key="normal" image="Format Bullets.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -252,10 +252,10 @@ For feedback, use the menu `Help` - `Send Feedback`</string>
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="xMw-Ft-013">
-                                        <rect key="frame" x="564" y="6" width="72" height="37"/>
+                                        <rect key="frame" x="565" y="6" width="50" height="49"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="glyphicons_081_refresh.png">
+                                        <state key="normal" image="Button Reload.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -264,10 +264,10 @@ For feedback, use the menu `Help` - `Send Feedback`</string>
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="nee-B4-Pnf">
-                                        <rect key="frame" x="634" y="6" width="72" height="37"/>
+                                        <rect key="frame" x="640" y="9" width="42" height="42"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="glyphicons_130_inbox.png">
+                                        <state key="normal" image="SaveDisk.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -276,10 +276,10 @@ For feedback, use the menu `Help` - `Send Feedback`</string>
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="XW9-fa-d8g">
-                                        <rect key="frame" x="703" y="10" width="65" height="29"/>
+                                        <rect key="frame" x="703" y="8" width="45" height="42"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" size="button"/>
-                                        <state key="normal" image="glyphicons_248_asterisk.png">
+                                        <state key="normal" image="Gears.png">
                                             <color key="titleColor" red="0.19607843137254902" green="0.30980392156862746" blue="0.52156862745098043" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -288,10 +288,10 @@ For feedback, use the menu `Help` - `Send Feedback`</string>
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="RKi-9O-1ii">
-                                        <rect key="frame" x="59" y="-14" width="47" height="63"/>
+                                        <rect key="frame" x="94" y="-1" width="37" height="51"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="glyphicons_030_pencil.png">
+                                        <state key="normal" image="Quill.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -299,11 +299,18 @@ For feedback, use the menu `Help` - `Send Feedback`</string>
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="yDp-c1-wAh">
+                                        <rect key="frame" x="239" y="7" width="252" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="0.20000000000000001" colorSpace="calibratedRGB"/>
                             </view>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="lEk-9W-BRk">
-                                <rect key="frame" x="597" y="57" width="151" height="31"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type File Name" minimumFontSize="17" id="lEk-9W-BRk">
+                                <rect key="frame" x="587" y="57" width="151" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -312,8 +319,10 @@ For feedback, use the menu `Help` - `Send Feedback`</string>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="createMDBtn" destination="RKi-9O-1ii" id="Gvh-zN-nZw"/>
                         <outlet property="fileListBtn" destination="ULm-ub-3Ve" id="3Xx-DF-CAU"/>
                         <outlet property="fileNameField" destination="lEk-9W-BRk" id="Bwr-l8-NzQ"/>
+                        <outlet property="infoLabel" destination="yDp-c1-wAh" id="BdE-vG-hdg"/>
                         <outlet property="markdownTextView" destination="b1r-ge-S50" id="JsI-mb-IlV"/>
                         <outlet property="previewWebView" destination="gvt-9o-gX5" id="sLr-tn-RzP"/>
                         <outlet property="saveBtn" destination="nee-B4-Pnf" id="sdx-xh-bzR"/>
@@ -354,11 +363,11 @@ For feedback, use the menu `Help` - `Send Feedback`</string>
         </scene>
     </scenes>
     <resources>
-        <image name="glyphicons_030_pencil.png" width="25" height="25"/>
-        <image name="glyphicons_081_refresh.png" width="25" height="26"/>
-        <image name="glyphicons_114_list.png" width="24" height="21"/>
-        <image name="glyphicons_130_inbox.png" width="24" height="23"/>
-        <image name="glyphicons_248_asterisk.png" width="20" height="20"/>
+        <image name="Button Reload.png" width="128" height="128"/>
+        <image name="Format Bullets.png" width="128" height="128"/>
+        <image name="Gears.png" width="128" height="128"/>
+        <image name="Quill.png" width="128" height="128"/>
+        <image name="SaveDisk.png" width="128" height="128"/>
     </resources>
     <classes>
         <class className="TablePopoverController" superclassName="UITableViewController">
@@ -367,11 +376,14 @@ For feedback, use the menu `Help` - `Send Feedback`</string>
         <class className="ViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
             <relationships>
+                <relationship kind="outlet" name="createMDBtn" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="fileListBtn" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="fileNameField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="infoLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="markdownTextView" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="previewWebView" candidateClass="UIWebView"/>
                 <relationship kind="outlet" name="saveBtn" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="saveDoneBtn" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="settingBtn" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="syncBtn" candidateClass="UIButton"/>
             </relationships>

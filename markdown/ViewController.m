@@ -31,8 +31,9 @@
 
 @synthesize fileListBtn;
 @synthesize settingBtn;
-@synthesize saveBtn,fileNameField;
-@synthesize syncBtn,restClient,muoPath,muoFolder,itemInDropboxArray,popoverController,itemInDeviceArray,itemAtBothSideArray,tablePopoverController,dropboxSwitch,mkFileName,automdFileName,autoSaveTimer,toolbar,toolbarItem;
+@synthesize saveBtn,fileNameField,saveDoneBtn;
+@synthesize createMDBtn;
+@synthesize syncBtn,restClient,muoPath,muoFolder,itemInDropboxArray,popoverController,itemInDeviceArray,itemAtBothSideArray,tablePopoverController,dropboxSwitch,mkFileName,automdFileName,autoSaveTimer,toolbar,toolbarItem,infoLabel;
 
 - (void)initToolbar{
     toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0, (self.view.frame.size.height/2) - 44.0, markdownTextView.frame.size.width, 44.0)];
@@ -97,22 +98,6 @@
 
 -(void) setBlockquotes {[self insertAtFirstPlace:@"> " intoTextView:markdownTextView];}
 -(void) setAsterisk {[self insertAtFirstPlace:@"* " intoTextView:markdownTextView];}
--(void) setHello {
-    MMFloatingNotification * floatingNotification=[[MMFloatingNotification alloc] initWithTitle:@"Saved!"];
-    [floatingNotification render];
-    floatingNotification.image=[[UIImage alloc] init];
-    [self.view addSubview:floatingNotification];
-    int max_width=320;
-    int max_height=480;
-    [floatingNotification startAnimationCycleFromFrame:
-     CGRectMake(max_width/2-[floatingNotification getDefaultSizeInScale:0.7].width/2,-10,
-                [floatingNotification getDefaultSizeInScale:0.7].width, 
-                [floatingNotification getDefaultSizeInScale:0.7].height) 
-                                       throughKeyFrame:CGRectMake(
-                                                                  (max_width-[floatingNotification getDefaultSizeInScale:1.0].width)/2, max_height/2-60, 
-                                                                  [floatingNotification getDefaultSizeInScale:1.0].width, [floatingNotification getDefaultSizeInScale:1.0].height) toDestinationFrame:CGRectMake((max_width-[floatingNotification getDefaultSizeInScale:0.2].width)/2, max_height-20,[floatingNotification getDefaultSizeInScale:0.2].width, [floatingNotification getDefaultSizeInScale:0.2].height)];
-    floatingNotification=nil;
-}
 
 - (void)initToolbarItems{
     UIBarButtonItem *flexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -138,6 +123,7 @@
     [self.markdownTextView becomeFirstResponder];
     [self relayout];
     fileNameField.hidden = YES;
+    saveDoneBtn.hidden = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidChangeFrame:) name:UIKeyboardDidChangeFrameNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
     
@@ -157,7 +143,7 @@
     [fileListBtn addTarget:self action:@selector(listFileButtonAction) forControlEvents:UIControlEventTouchUpInside];
     [settingBtn addTarget:self action:@selector(settingButtonAction) forControlEvents:UIControlEventTouchUpInside];
     [saveBtn addTarget:self action:@selector(saveMarkdownFile) forControlEvents:UIControlEventTouchUpInside];
-    
+    [createMDBtn addTarget:self action:@selector(createNewFile) forControlEvents:UIControlEventTouchUpInside];
     autoSaveTimer=[NSTimer scheduledTimerWithTimeInterval:3 
                                            target:self 
                                          selector:@selector(autoSaveFile) 
@@ -571,25 +557,50 @@
 
 - (void)createNewFile
 {
-    //1 save current file
-
-    //2 close current file
-    
-    //3 new markdownTextView.text, create unsave
+    NSString *autoFileName = [muoFolder stringByAppendingPathComponent:@"Unsaved"];
+    automdFileName = [autoFileName stringByAppendingString:@".md"];
+    NSLog(@"automdFileName 建立了？%@",automdFileName);
+    BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:automdFileName];
+    if (blHave) {
+        infoLabel.text = @"Please save your unsaved file";
+        infoLabel.textColor = [UIColor lightGrayColor];
+        [UIView beginAnimations:@"textFades" context:nil];
+        [UIView setAnimationDuration:5];
+        [infoLabel setEnabled:NO];
+        [infoLabel setAlpha:0.0];
+        [UIView commitAnimations];
+        BOOL bSave = [self saveMarkdownFile];
+        if (bSave) {
+        }else {
+            NSLog(@"保存失败，需要检查saveMarkdownFile");
+            return;
+        }
+    }else {
+        mkFileName = @"";
+        NSLog(@"mkFileName 清空了？%@",mkFileName);
+        markdownTextView.text=@"";
+        infoLabel.text = @"Created a new file";
+        infoLabel.textColor = [UIColor lightGrayColor];
+        [UIView beginAnimations:@"textFades" context:nil];
+        [UIView setAnimationDuration:5];
+        [infoLabel setEnabled:NO];
+        [infoLabel setAlpha:0.0];
+        [UIView commitAnimations];
+    }
 }
 
 - (void)autoSaveFile{
     if ([self isEmptyString:mkFileName]==NO) {
-        NSLog(@"文件存在");
+        //NSLog(@"自定义名称的文件存在");
         NSString *savedString = markdownTextView.text;
         BOOL result = [savedString writeToFile:mkFileName atomically:YES encoding:NSUTF8StringEncoding error: nil];
         if (result) {
-            NSLog(@"文件自动保存到%@成功！",mkFileName);
+            //NSLog(@"文件自动保存到%@成功！",mkFileName);
         }else {
             NSLog(@"文件自动保存到%@失败！",mkFileName);
         }
     }else {
-        NSLog(@"没有文件需要创建");
+        //NSLog(@"没有文件需要创建");
         NSFileManager *fileManager = [NSFileManager defaultManager];
         NSString *mdFileName = [muoFolder stringByAppendingPathComponent:@"Unsaved"];
         automdFileName = [mdFileName stringByAppendingString:@".md"];
@@ -597,7 +608,7 @@
             NSString *savedString = markdownTextView.text;
             BOOL result = [savedString writeToFile:automdFileName atomically:YES encoding:NSUTF8StringEncoding error: nil];
             if (result) {
-                NSLog(@"文件自动保存到%@成功！",automdFileName);
+                //NSLog(@"文件自动保存到%@成功！",automdFileName);
             }else {
                 NSLog(@"文件自动保存到%@失败！",automdFileName);
             }
@@ -605,24 +616,42 @@
     }
 }
 
-- (void)saveMarkdownFile{
+-(void) saveFlag {
+    MMFloatingNotification * floatingNotification=[[MMFloatingNotification alloc] initWithTitle:@"Saved!"];
+    [floatingNotification render];
+    floatingNotification.image=[[UIImage alloc] init];
+    [self.view addSubview:floatingNotification];
+    int max_width=320;
+    int max_height=480;
+    [floatingNotification startAnimationCycleFromFrame:
+     CGRectMake(max_width/2-[floatingNotification getDefaultSizeInScale:3].width/2,-10,
+                [floatingNotification getDefaultSizeInScale:3].width, 
+                [floatingNotification getDefaultSizeInScale:3].height) 
+                                       throughKeyFrame:CGRectMake(
+                                                                  (max_width-[floatingNotification getDefaultSizeInScale:2.0].width)/2, max_height/2-60, 
+                                                                  [floatingNotification getDefaultSizeInScale:2.0].width, [floatingNotification getDefaultSizeInScale:2.0].height) toDestinationFrame:CGRectMake((max_width-[floatingNotification getDefaultSizeInScale:2].width)/2, max_height-20,[floatingNotification getDefaultSizeInScale:2].width, [floatingNotification getDefaultSizeInScale:2].height)];
+    floatingNotification=nil;
+}
+
+- (BOOL)saveMarkdownFile{
     if ([self isEmptyString:mkFileName]==NO) {
-        NSLog(@"文件存在");
         NSString *savedString = markdownTextView.text;
         BOOL result = [savedString writeToFile:mkFileName atomically:YES encoding:NSUTF8StringEncoding error: nil];
         if (result) {
-            NSLog(@"写入文件成功");
+            NSLog(@"文件已经追加保存");
             fileNameField.hidden = YES;
-            [saveBtn setTitle:@"Saved" forState:UIControlStateNormal];
+            UIImage *imgDone = [UIImage imageNamed:@"Done.png"];
+            UIImage *imgSaveDisk = [UIImage imageNamed:@"SaveDisk.png"];
+            [saveBtn setImage:imgDone forState:UIControlStateNormal];
             [UIView beginAnimations:nil context:nil];
-            [UIView setAnimationDuration:1];
-            [saveBtn setTitle:@"Save" forState:UIControlStateNormal];
+            [UIView setAnimationDuration:5];
+            [saveBtn setImage:imgSaveDisk forState:UIControlStateNormal];
             [UIView commitAnimations];
         }else {
             NSLog(@"写入文件失败");
         }
     }else {
-        NSLog(@"没有文件需要创建");
+        NSLog(@"文件已经保存");
         if (fileNameField.hidden == YES) {
             fileNameField.hidden = NO;
             [saveBtn setTitle:@"OK" forState:UIControlStateNormal];
@@ -633,18 +662,44 @@
                 NSFileManager *fileManager = [NSFileManager defaultManager];
                 NSString *mdFileName = [muoFolder stringByAppendingPathComponent:fileNamed];
                 mkFileName = [mdFileName stringByAppendingString:@".md"];
+
+                NSString *autoFileName = [muoFolder stringByAppendingPathComponent:@"Unsaved"];
+                automdFileName = [autoFileName stringByAppendingString:@".md"];
+                BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:automdFileName];
                 NSLog(@"mkFileName: %@",mkFileName);
                 if (![fileManager fileExistsAtPath:mkFileName]) {
                     NSString *savedString = markdownTextView.text;
                     BOOL result = [savedString writeToFile:mkFileName atomically:YES encoding:NSUTF8StringEncoding error: nil];
                     if (result) {
+                        
+                        //!!!做到这里了保存完后在label上显示信息
                         NSLog(@"文件创建成功！");
+                        infoLabel.text =  [NSString stringWithFormat:@"%@ saved",mkFileName];
+                        infoLabel.textColor = [UIColor lightGrayColor];
+                        
+                        [UIView beginAnimations:@"textFades" context:nil];
+                        [UIView setAnimationDuration:3];
+                        [infoLabel setEnabled:NO];
+                        [infoLabel setAlpha:0.0];
+                        [UIView commitAnimations];
+                        
+                        if (!blHave) {
+                            return YES;
+                        }else {
+                            BOOL blDele= [fileManager removeItemAtPath:automdFileName error:nil];
+                            if (blDele) {
+                                NSLog(@"unsaved删除成功");
+                            }else {
+                                NSLog(@"unsaved删除失败");
+                            }
+                        }
                         fileNameField.hidden = YES;
                         [saveBtn setTitle:@"Saved" forState:UIControlStateNormal];
                         [UIView beginAnimations:nil context:nil];
                         [UIView setAnimationDuration:1];
                         [saveBtn setTitle:@"Save" forState:UIControlStateNormal];
                         [UIView commitAnimations];
+                        [self saveFlag];
                     }else {
                         NSLog(@"文件创建失败！");
                     }
