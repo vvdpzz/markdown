@@ -1,8 +1,8 @@
 //
-//  SettingPopoverController.m
-//  markdown
+//  TablePopoverController.h
+//  cursorControl
 //
-//  Created by xiaodong xue on 12-6-20.
+//  Created by 陈振宇 & 薛晓东 on 12-6-17.
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 

@@ -350,7 +350,12 @@
     UIView* popoverView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 300)];
     popoverView.backgroundColor = [UIColor whiteColor];
     
-    dropboxSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(20, 20, 150, 40)];
+    dropboxSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(20, 30, 150, 40)];
+    
+    UILabel *dropboxFolder = [[UILabel alloc] initWithFrame:CGRectMake(20, 57, 150, 40)];
+    dropboxFolder.text = @"Dropbox folder: /App/Muo";
+    dropboxFolder.font = [UIFont systemFontOfSize:12];
+    dropboxFolder.textColor = [UIColor grayColor];
     [dropboxSwitch addTarget:self action:@selector(dropboxSwitch:) forControlEvents:UIControlEventValueChanged];
     if (![[DBSession sharedSession] isLinked]) {
         [dropboxSwitch setOn:NO animated:NO];
@@ -358,6 +363,7 @@
         [dropboxSwitch setOn:YES animated:NO];
     }
     [popoverView addSubview:dropboxSwitch];
+    [popoverView addSubview:dropboxFolder];
     
     popoverContent.view = popoverView;
     popoverContent.contentSizeForViewInPopover = CGSizeMake(200, 300);
