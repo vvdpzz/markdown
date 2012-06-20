@@ -190,12 +190,12 @@
     if (self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight){
         float weight = self.view.frame.size.height / 2;
         float height = self.view.frame.size.width;
-        self.markdownTextView.frame = CGRectMake(0, 0, weight, height);
+        self.markdownTextView.frame = CGRectMake(0, 30, weight, height);
         self.previewWebView.frame = CGRectMake(weight, 0, weight, height);
     }else {
         float weight = self.view.frame.size.width;
         float height = self.view.frame.size.height / 2;
-        self.markdownTextView.frame = CGRectMake(0, 0, weight, height);
+        self.markdownTextView.frame = CGRectMake(0, 30, weight, height);
         self.previewWebView.frame = CGRectMake(0, height, weight, height);
     }
 }
