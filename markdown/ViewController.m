@@ -2,7 +2,7 @@
 //  ViewController.m
 //  markdown
 //
-//  Created by 陈振宇 on 12-5-5.
+//  Created by 陈振宇 & 薛晓东 on 12-5-5.
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
@@ -31,7 +31,7 @@
 
 @synthesize fileListBtn;
 @synthesize settingBtn;
-@synthesize saveBtn,fileNameField,saveDoneBtn;
+@synthesize saveBtn,fileNameField;
 @synthesize createMDBtn;
 @synthesize syncBtn,restClient,muoPath,muoFolder,itemInDropboxArray,popoverController,itemInDeviceArray,itemAtBothSideArray,tablePopoverController,dropboxSwitch,mkFileName,automdFileName,autoSaveTimer,toolbar,toolbarItem,infoLabel;
 
@@ -123,7 +123,6 @@
     [self.markdownTextView becomeFirstResponder];
     [self relayout];
     fileNameField.hidden = YES;
-    saveDoneBtn.hidden = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidChangeFrame:) name:UIKeyboardDidChangeFrameNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
     
@@ -635,54 +634,58 @@
 
 - (BOOL)saveMarkdownFile{
     if ([self isEmptyString:mkFileName]==NO) {
+        //如果文件已经保存过，就追加保存
         NSString *savedString = markdownTextView.text;
         BOOL result = [savedString writeToFile:mkFileName atomically:YES encoding:NSUTF8StringEncoding error: nil];
+
         if (result) {
             NSLog(@"文件已经追加保存");
-            fileNameField.hidden = YES;
-            UIImage *imgDone = [UIImage imageNamed:@"Done.png"];
-            UIImage *imgSaveDisk = [UIImage imageNamed:@"SaveDisk.png"];
-            [saveBtn setImage:imgDone forState:UIControlStateNormal];
-            [UIView beginAnimations:nil context:nil];
+            return YES;
+            infoLabel.text =  @"saved";
+            infoLabel.textColor = [UIColor lightGrayColor];
+            [UIView beginAnimations:@"textFades" context:nil];
             [UIView setAnimationDuration:5];
-            [saveBtn setImage:imgSaveDisk forState:UIControlStateNormal];
+            [infoLabel setEnabled:NO];
+            [infoLabel setAlpha:0.0];
             [UIView commitAnimations];
         }else {
             NSLog(@"写入文件失败");
+            return NO;
         }
     }else {
         NSLog(@"文件已经保存");
         if (fileNameField.hidden == YES) {
             fileNameField.hidden = NO;
-            [saveBtn setTitle:@"OK" forState:UIControlStateNormal];
+            UIImage *imgDone = [UIImage imageNamed:@"Done.png"];
+            [saveBtn setImage:imgDone forState:UIControlStateNormal];
         } else {
+            //如果点击的时候名称输入框是打开的情况
             fileNameField.textAlignment = UITextAlignmentCenter;
-            if ([fileNameField.text length] > 0) {                                                      
+            if ([fileNameField.text length] > 0) {
+                //判断名称输入栏不为空
                 NSString *fileNamed = fileNameField.text;
                 NSFileManager *fileManager = [NSFileManager defaultManager];
                 NSString *mdFileName = [muoFolder stringByAppendingPathComponent:fileNamed];
                 mkFileName = [mdFileName stringByAppendingString:@".md"];
-
                 NSString *autoFileName = [muoFolder stringByAppendingPathComponent:@"Unsaved"];
                 automdFileName = [autoFileName stringByAppendingString:@".md"];
                 BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:automdFileName];
                 NSLog(@"mkFileName: %@",mkFileName);
                 if (![fileManager fileExistsAtPath:mkFileName]) {
+                    //如果建立文件成功，将uitextview内容写入文件
                     NSString *savedString = markdownTextView.text;
                     BOOL result = [savedString writeToFile:mkFileName atomically:YES encoding:NSUTF8StringEncoding error: nil];
                     if (result) {
-                        
-                        //!!!做到这里了保存完后在label上显示信息
                         NSLog(@"文件创建成功！");
-                        infoLabel.text =  [NSString stringWithFormat:@"%@ saved",mkFileName];
+                        infoLabel.text =  [NSString stringWithFormat:@"%@.md saved",fileNameField.text];
+                        UIImage *imgSaveDisk = [UIImage imageNamed:@"SaveDisk.png"];
+                        [saveBtn setImage:imgSaveDisk forState:UIControlStateNormal];
                         infoLabel.textColor = [UIColor lightGrayColor];
-                        
                         [UIView beginAnimations:@"textFades" context:nil];
-                        [UIView setAnimationDuration:3];
+                        [UIView setAnimationDuration:5];
                         [infoLabel setEnabled:NO];
                         [infoLabel setAlpha:0.0];
                         [UIView commitAnimations];
-                        
                         if (!blHave) {
                             return YES;
                         }else {
@@ -699,7 +702,6 @@
                         [UIView setAnimationDuration:1];
                         [saveBtn setTitle:@"Save" forState:UIControlStateNormal];
                         [UIView commitAnimations];
-                        [self saveFlag];
                     }else {
                         NSLog(@"文件创建失败！");
                     }

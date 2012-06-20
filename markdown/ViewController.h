@@ -2,7 +2,7 @@
 //  ViewController.h
 //  markdown
 //
-//  Created by  on 12-5-5.
+//  Created by 陈振宇 & 薛晓东 on 12-5-5.
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
@@ -33,7 +33,6 @@
 @property (nonatomic) CGRect panFrame;
 
 @property (weak, nonatomic) IBOutlet UIButton *saveBtn;
-@property (weak, nonatomic) IBOutlet UIButton *saveDoneBtn;
 @property (weak, nonatomic) IBOutlet UIButton *syncBtn;
 @property (weak, nonatomic) IBOutlet UITextField *fileNameField;
 @property (strong, nonatomic) IBOutlet UIButton *fileListBtn;

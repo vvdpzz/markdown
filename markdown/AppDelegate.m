@@ -2,7 +2,7 @@
 //  AppDelegate.m
 //  markdown
 //
-//  Created by  on 12-5-5.
+//  Created by 陈振宇 & 薛晓东 on 12-5-5.
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 

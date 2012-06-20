@@ -2,7 +2,7 @@
 //  TablePopoverController.m
 //  cursorControl
 //
-//  Created by xiaodong xue on 12-5-17.
+//  Created by 陈振宇 & 薛晓东 on 12-5-17.
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
